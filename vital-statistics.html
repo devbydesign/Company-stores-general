@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vital Statistics - Employee Recognition Research | RBB Marketing</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="navigation.css">
+  <!-- Load centralized navigation BEFORE your main script -->
+  <script src="navigation.js"></script>
+  <script src="script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .statistics-hero {
+      background: linear-gradient(135deg, #e5e7f0 0%, #eff0f5 100%);
+      color: #000000;
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .statistics-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #eff0f5 0%, #8a8fa3 100%);
+      z-index: 1;
+    }
+
+    .statistics-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .statistics-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    .statistics-hero p {
+      font-size: 1.25rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #000000;
+      opacity: 0.8;
+    }
+
+    .statistics-content {
+      padding: 4rem 0;
+    }
+
+    .feature-section {
+      margin-bottom: 4rem;
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid var(--brand-orange);
+    }
+
+    .feature-header i {
+      font-size: 2.5rem;
+      color: var(--brand-orange);
+      margin-right: 1rem;
+    }
+
+    .feature-header h2 {
+      color: #000000;
+      font-size: 2.2rem;
+      margin: 0;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-left: 5px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+      border-left-color: var(--brand-orange);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .stat-description {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .stat-source {
+      font-size: 0.95rem;
+      color: #666;
+      font-style: italic;
+      background: white;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #e9ecef;
+    }
+
+    .source-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .source-link:hover {
+      text-decoration: underline;
+    }
+
+    .key-insights {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .key-insights h3 {
+      color: #000000;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .insight-item {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 2px solid var(--primary-color);
+    }
+
+    .insight-item h4 {
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .statistics-hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .statistics-hero p {
+        font-size: 1.1rem;
+      }
+
+      .feature-section {
+        padding: 1.5rem;
+      }
+
+      .feature-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .feature-header i {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation will be inserted here automatically by navigation.js -->
+
+  <main>
+    <section class="statistics-hero">
+      <div class="container">
+        <h1>Vital Statistics</h1>
+        <p>Research-backed data that proves the transformative power of employee recognition programs</p>
+      </div>
+    </section>
+
+    <section class="statistics-content">
+      <div class="container">
+        
+        <!-- Welcome Kits Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-gift"></i>
+            <h2>Welcome Kits & Onboarding</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">69%</span>
+              <div class="stat-description">of employees are more likely to remain with a company for up to three years if they experience great onboarding.</div>
+              <div class="stat-source">Source: <a href="https://www.shrm.org/hr-today/news/hr-magazine/pages/0914-onboarding.aspx" target="_blank" class="source-link">SHRM</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">54%</span>
+              <div class="stat-description">greater new-hire productivity experienced by organizations with a standard onboarding process.</div>
+              <div class="stat-source">Source: <a href="https://www.globenewswire.com/news-release/2011/11/17/459702/238734/en/Onboarding-2011-The-Path-to-Productivity.html" target="_blank" class="source-link">Aberdeen Group</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">50%</span>
+              <div class="stat-description">greater new-hire retention seen in organizations with a standard onboarding process.</div>
+              <div class="stat-source">Source: <a href="https://www.globenewswire.com/news-release/2011/11/17/459702/238734/en/Onboarding-2011-The-Path-to-Productivity.html" target="_blank" class="source-link">Aberdeen Group</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">90%</span>
+              <div class="stat-description">of new hires decide whether to stay with a company within their first six months, making effective onboarding critical.</div>
+              <div class="stat-source">Source: <a href="https://www.linkedin.com/pulse/employee-recognition-trends-2024-fostering-engagement-mudaliar-qzgxc" target="_blank" class="source-link">LinkedIn Employee Recognition Trends</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Years of Service Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-calendar-alt"></i>
+            <h2>Years of Service</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">Up to 213%</span>
+              <div class="stat-description">of an employee's annual salary can be the cost of replacing them, making retention a financial imperative.</div>
+              <div class="stat-source">Source: <a href="https://www.americanprogress.org/article/there-are-significant-business-costs-to-replacing-employees/" target="_blank" class="source-link">Center for American Progress</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">31%</span>
+              <div class="stat-description">lower voluntary turnover is seen in companies with modern, effective recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://www.forbes.com/sites/joshbersin/2012/06/13/new-research-unlocks-the-secret-of-employee-recognition/" target="_blank" class="source-link">Bersin by Deloitte</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">52%</span>
+              <div class="stat-description">less turnover among employees who participate in workplace giving and volunteer programs compared to those who don't.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">65%</span>
+              <div class="stat-description">of job seekers actively look for employers with strong social consciousness and community involvement.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">PwC via Corporate Volunteerism Study</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Bonuses Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-trophy"></i>
+            <h2>Performance Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">21%</span>
+              <div class="stat-description">increase in productivity is seen in organizations that prioritize and effectively implement employee recognition.</div>
+              <div class="stat-source">Source: <a href="https://www.achievers.com/blog/employee-recognition-and-productivity/" target="_blank" class="source-link">Achievers</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">85%</span>
+              <div class="stat-description">of employees report being more motivated when management offers regular feedback, recognition, and rewards.</div>
+              <div class="stat-source">Source: <a href="https://www2.deloitte.com/us/en/insights/focus/human-capital-trends/2018/employee-recognition-in-a-digital-world.html" target="_blank" class="source-link">Deloitte</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">96%</span>
+              <div class="stat-description">of companies find that employees who volunteer are more engaged than those who don't participate in company programs.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Study</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">71%</span>
+              <div class="stat-description">of employees believe it's important to work at a company that gives back through philanthropy and volunteering.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Research</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wellness Programs Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-heartbeat"></i>
+            <h2>Wellness Programs</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">$3.27</span>
+              <div class="stat-description">is the average return for every $1 invested in wellness programs, due to reduced medical costs.</div>
+              <div class="stat-source">Source: <a href="https://www.cdc.gov/pcd/issues/2010/jul/10_0013.htm" target="_blank" class="source-link">CDC</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">28%</span>
+              <div class="stat-description">reduction in sick days is experienced by companies with comprehensive wellness programs.</div>
+              <div class="stat-source">Source: <a href="https://hbr.org/2010/12/whats-the-hard-return-on-employee-wellness-programs" target="_blank" class="source-link">Harvard Business Review</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">3x</span>
+              <div class="stat-description">more likely to be engaged at work are employees who feel their company genuinely cares about their well-being.</div>
+              <div class="stat-source">Source: <a href="https://www.gallup.com/workplace/236021/why-wellness-program-isnt-enough.aspx" target="_blank" class="source-link">Gallup</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">80%</span>
+              <div class="stat-description">of companies are planning to digitize their HR efforts, including wellness tracking and employee health programs.</div>
+              <div class="stat-source">Source: <a href="https://halo.com/2025-employee-recognition-trends/" target="_blank" class="source-link">2025 Employee Recognition Trends</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spot Recognition Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-star"></i>
+            <h2>Spot Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">Weekly</span>
+              <div class="stat-description">recognition is the frequency Gallup suggests is most effective for reinforcing positive behaviors and making employees feel valued.</div>
+              <div class="stat-source">Source: <a href="https://www.gallup.com/workplace/236441/ways-promote-employee-wellbeing.aspx" target="_blank" class="source-link">Gallup</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">69%</span>
+              <div class="stat-description">of employees say they would work harder if they felt their efforts were better appreciated.</div>
+              <div class="stat-source">Source: <a href="https://bucketlistrewards.com/blog/blog-employee-recognition-and-rewards-program-implementation/" target="_blank" class="source-link">Bucketlist Rewards</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">40%</span>
+              <div class="stat-description">reduction in voluntary turnover can be achieved by organizations with effective, regular recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://bucketlistrewards.com/blog/blog-employee-recognition-and-rewards-program-implementation/" target="_blank" class="source-link">Bucketlist Rewards</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">17%</span>
+              <div class="stat-description">drop in absence rates seen by manufacturing organizations using text-based attendance tracking software.</div>
+              <div class="stat-source">Source: <a href="https://www.teamsense.com/blog/absenteeism-workplace-statistics" target="_blank" class="source-link">TeamSense Absenteeism Study</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Peer-to-Peer Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-users"></i>
+            <h2>Peer-to-Peer Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">41%</span>
+              <div class="stat-description">of employees feel the most meaningful recognition comes from their direct peers.</div>
+              <div class="stat-source">Source: <a href="https://www.gallup.com/workplace/397893/employee-recognition-real-time-real-results.aspx" target="_blank" class="source-link">Gallup</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">14%</span>
+              <div class="stat-description">improvement in individual performance can result from direct feedback and recognition from peers.</div>
+              <div class="stat-source">Source: <a href="https://www.terryberry.com/blog/employee-recognition-statistics/" target="_blank" class="source-link">Achievers via Terryberry</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">35.7%</span>
+              <div class="stat-description">more likely to have a positive impact on financial results is peer-to-peer praise compared to manager-only recognition.</div>
+              <div class="stat-source">Source: <a href="https://www.giftafeeling.com/blogs/our-blogs/employee-recognition-statistics-2024" target="_blank" class="source-link">SHRM/Globoforce via GiftAFeeling</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">41%</span>
+              <div class="stat-description">of companies using peer recognition saw an increase in customer satisfaction, linking internal culture to external success.</div>
+              <div class="stat-source">Source: <a href="https://www.terryberry.com/blog/employee-recognition-statistics/" target="_blank" class="source-link">SHRM via Terryberry</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Point-Based Rewards Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-star-half-alt"></i>
+            <h2>Point-Based Rewards</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">50%</span>
+              <div class="stat-description">higher volunteer hours per person in companies that offer reward programs for volunteer activities.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Benevity State of Corporate Volunteering</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">40%</span>
+              <div class="stat-description">of Fortune 500 companies offer volunteer grant programs that reward employee community service with points or donations.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">$8-$15</span>
+              <div class="stat-description">per hour volunteered is contributed by 80% of companies with volunteer grant programs as reward incentives.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Study</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">197%</span>
+              <div class="stat-description">increase in volunteer rewards seen by Principal Financial after redesigning their program to be more accessible and rewarding.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Benevity State of Corporate Volunteering</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- General Awards Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-award"></i>
+            <h2>General Awards</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">90%</span>
+              <div class="stat-description">of employees who participate in skills-based volunteering are excited to donate their professional expertise again within the next year.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Taproot via Benevity State of Corporate Volunteering</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">80%</span>
+              <div class="stat-description">of young Americans base purchasing decisions on a brand's mission or purpose, making company awards and recognition programs crucial.</div>
+              <div class="stat-source">Source: <a href="https://www.giveriver.com/blog/examples-of-corporate-social-responsibility" target="_blank" class="source-link">CSR Success Stories Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">74%</span>
+              <div class="stat-description">would boycott brands that go against their personal values, emphasizing the importance of authentic recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://www.giveriver.com/blog/examples-of-corporate-social-responsibility" target="_blank" class="source-link">CSR Success Stories Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">11%</span>
+              <div class="stat-description">valuation premium enjoyed by companies recognized as leaders in environmental, social, or governance matters.</div>
+              <div class="stat-source">Source: <a href="https://www.giveriver.com/blog/examples-of-corporate-social-responsibility" target="_blank" class="source-link">CSR Success Stories Research</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Incentive Programs Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-concierge-bell"></i>
+            <h2>Incentive Programs</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">60%</span>
+              <div class="stat-description">of companies offer paid volunteer time off (VTO) as an incentive, recognizing community service as valuable work.</div>
+              <div class="stat-source">Source: <a href="https://doublethedonation.com/corporate-volunteerism/" target="_blank" class="source-link">Corporate Volunteerism Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">94%</span>
+              <div class="stat-description">of companies with employee engagement programs now run volunteering initiatives as part of their incentive strategies.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Benevity State of Corporate Volunteering</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">57%</span>
+              <div class="stat-description">year-over-year increase in volunteering participation when companies implement structured incentive programs.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Benevity State of Corporate Volunteering</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">70%</span>
+              <div class="stat-description">of employees said their personal sense of purpose is defined by their work, making purpose-driven incentives critical.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">McKinsey via Benevity State of Corporate Volunteering</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attendance Recognition Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-calendar-check"></i>
+            <h2>Attendance Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">$225.8B</span>
+              <div class="stat-description">annual cost of absenteeism to U.S. employers in lost productivity.</div>
+              <div class="stat-source">Source: <a href="https://www.cdc.gov/chronicdisease/programs-impact/pop/workplace-health-worker-productivity.html" target="_blank" class="source-link">CDC</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">41%</span>
+              <div class="stat-description">reduction in unscheduled absences is seen in companies with attendance recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://www.shrm.org/topics-tools/tools/hr-answers/what-are-best-practices-attendance-management" target="_blank" class="source-link">SHRM</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">2.8x</span>
+              <div class="stat-description">more likely to recommend their workplace are employees who improve their attendance by 15% or more.</div>
+              <div class="stat-source">Source: <a href="https://www.gallup.com/workplace/229424/employee-engagement-drive-growth.aspx" target="_blank" class="source-link">Gallup</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">3.2%</span>
+              <div class="stat-description">was the national absence rate in 2024, up from 3.1% in 2023, with injury and illness being the leading causes.</div>
+              <div class="stat-source">Source: <a href="https://www.teamsense.com/blog/absenteeism-workplace-statistics" target="_blank" class="source-link">Bureau of Labor Statistics via TeamSense</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Safety Recognition Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-shield-alt"></i>
+            <h2>Safety Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">52%</span>
+              <div class="stat-description">fewer workplace incidents are experienced by companies with robust safety recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://www.nsc.org/workplace/safety-topics/workplace-safety-and-its-impact-on-your-bottom-line" target="_blank" class="source-link">National Safety Council</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">85%</span>
+              <div class="stat-description">higher rate of safety suggestions in workplaces that actively recognize and reward safety contributions.</div>
+              <div class="stat-source">Source: Workplace Safety Research</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">40%</span>
+              <div class="stat-description">lower workers' compensation costs are reported by companies with strong safety recognition.</div>
+              <div class="stat-source">Source: <a href="https://www.nsc.org/workplace/safety-topics/workplace-safety-and-its-impact-on-your-bottom-line" target="_blank" class="source-link">National Safety Council</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">2.8%</span>
+              <div class="stat-description">absenteeism rate in the manufacturing industry, where injury and illness are leading causes of absences.</div>
+              <div class="stat-source">Source: <a href="https://www.teamsense.com/blog/absenteeism-workplace-statistics" target="_blank" class="source-link">Bureau of Labor Statistics via TeamSense</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community Impact Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-hands-helping"></i>
+            <h2>Community Impact</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">83%</span>
+              <div class="stat-description">of millennials consider a company's purpose and community impact when deciding where to work.</div>
+              <div class="stat-source">Source: <a href="https://www2.deloitte.com/global/en/pages/about-deloitte/articles/millennialsurvey.html" target="_blank" class="source-link">Deloitte</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">38%</span>
+              <div class="stat-description">higher employee satisfaction is reported by companies with active community engagement programs.</div>
+              <div class="stat-source">Source: <a href="https://www.pointsoflight.org/what-we-do/corporate-services/research/" target="_blank" class="source-link">Points of Light Foundation</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">16%</span>
+              <div class="stat-description">higher performance is shown by purpose-driven employees in organizations with a clear community mission.</div>
+              <div class="stat-source">Source: <a href="https://hbr.org/2018/07/creating-a-purpose-driven-organization" target="_blank" class="source-link">Harvard Business Review</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">9.2%</span>
+              <div class="stat-description">global average volunteering participation rate among employees, representing a 57% increase from the previous year.</div>
+              <div class="stat-source">Source: <a href="https://benevity.com/state-of-volunteering-2024" target="_blank" class="source-link">Benevity State of Corporate Volunteering</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient Care Recognition Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-heart-pulse"></i>
+            <h2>Patient Care Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">12%</span>
+              <div class="stat-description">improvement in patient satisfaction scores at hospitals with robust recognition programs.</div>
+              <div class="stat-source">Source: <a href="https://info.pressganey.com/patient-experience-engagement/why-employee-engagement-matters-for-optimal-healthcare-outcomes" target="_blank" class="source-link">Press Ganey, "Why Employee Engagement Matters for Optimal Healthcare Outcomes"</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">31%</span>
+              <div class="stat-description">lower voluntary turnover in organizations with strong recognition programs compared to those without.</div>
+              <div class="stat-source">Source: <a href="https://www.gallup.com/workplace/236441/employee-recognition-low-cost-high-impact.aspx" target="_blank" class="source-link">Gallup, "Employee Recognition: Low Cost, High Impact"</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Volunteer Recognition Section -->
+        <div class="feature-section">
+          <div class="feature-header">
+            <i class="fas fa-hands-helping"></i>
+            <h2>Volunteer Recognition</h2>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-number">89%</span>
+              <div class="stat-description">of employees report higher engagement when their employer recognizes volunteer efforts and community service.</div>
+              <div class="stat-source">Source: <a href="https://www.aseonline.org/News-Events/ASE-News/Press-Releases/deloitte-survey-highlights-the-value-of-workplace-volunteer-programs" target="_blank" class="source-link">Deloitte Volunteer Impact Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">70%</span>
+              <div class="stat-description">stronger positive company reputation among organizations that actively recognize and support employee volunteerism.</div>
+              <div class="stat-source">Source: <a href="https://www.aseonline.org/News-Events/ASE-News/Press-Releases/deloitte-survey-highlights-the-value-of-workplace-volunteer-programs" target="_blank" class="source-link">Deloitte Volunteer Impact Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">83%</span>
+              <div class="stat-description">of millennials would consider leaving a company that doesn't align with their values, making volunteer recognition crucial for retention.</div>
+              <div class="stat-source">Source: <a href="https://www.aseonline.org/News-Events/ASE-News/Press-Releases/deloitte-survey-highlights-the-value-of-workplace-volunteer-programs" target="_blank" class="source-link">Deloitte Volunteer Impact Research</a></div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">2.3x</span>
+              <div class="stat-description">more likely to attract purpose-driven talent when companies recognize and celebrate employee volunteer efforts.</div>
+              <div class="stat-source">Source: <a href="https://www.aseonline.org/News-Events/ASE-News/Press-Releases/deloitte-survey-highlights-the-value-of-workplace-volunteer-programs" target="_blank" class="source-link">Deloitte Volunteer Impact Research</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Insights Section -->
+        <div class="key-insights">
+          <h3>Key Insights from Recognition Data</h3>
+          <div class="insights-grid">
+            <div class="insight-item">
+              <h4>Recognition Drives Retention</h4>
+              <p>Companies with strong recognition programs see 31% lower turnover and employees are 5x more likely to stay when they feel appreciated.</p>
+            </div>
+            <div class="insight-item">
+              <h4>Immediate Impact Matters</h4>
+              <p>Immediate recognition increases behavior repetition by 70%, making spot recognition a powerful tool for reinforcing positive behaviors.</p>
+            </div>
+            <div class="insight-item">
+              <h4>Safety & Attendance ROI</h4>
+              <p>Safety recognition programs reduce incidents by 52% while attendance recognition cuts unscheduled absences by 41%, creating substantial business value.</p>
+            </div>
+            <div class="insight-item">
+              <h4>Purpose-Driven Engagement</h4>
+              <p>83% of workers consider company purpose when choosing employers, and community impact programs drive 38% higher employee satisfaction.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>RBB Marketing</h3>
+          <p>Creating meaningful employee recognition programs that inspire, celebrate, and elevate your workforce.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="build-program.html">Build Program</a></li>
+            <li><a href="resources.html">Program Resources</a></li>
+            <li><a href="vital-statistics.html">Vital Statistics</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p><i class="fas fa-phone"></i> (987) 654-3210</p>
+          <p><i class="fas fa-envelope"></i> chuck.feldman@rbbmarketing.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> RBB Marketing. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      document.querySelector('nav ul').classList.toggle('active');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all stat cards
+    document.querySelectorAll('.stat-card, .insight-item').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
