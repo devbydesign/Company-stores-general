@@ -1,0 +1,3310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RBB Marketing - Build Your Employee Recognition Program</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="navigation.css?v=2">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js" defer></script>
+  <style>
+    :root {
+      --primary-color: #23456C;
+      --secondary-color: #000000;
+      --accent-color: #f7b801;
+      --brand-green: #23456C;
+      --dark-color: #000000;
+      --light-color: #ffffff;
+      --medium-color: #f0f2f5;
+      --text-muted: #666666;
+      --success-color: #48c774;
+      --border-radius: 6px;
+      --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --font-secondary: 'Georgia', serif;
+      --transition-speed: 0.3s;
+      --section-padding: 4rem 0;
+    }
+    
+    /* Sticky Program Builder Styles */
+    .program-builder-wrapper {
+      display: flex;
+      gap: 2rem;
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .program-features-content {
+      flex: 1;
+      max-width: calc(100% - 140px);
+      padding-right: 2rem;
+    }
+    
+    .sticky-program-builder {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 380px;
+      height: fit-content;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: white;
+      border: 2px solid var(--primary-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 25px rgba(58, 12, 163, 0.15);
+      z-index: 999;
+    }
+    
+    .sticky-program-builder h3 {
+      color: black;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .selected-features {
+      min-height: 200px;
+      border: 2px dashed #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background: #fafafa;
+    }
+    
+    .selected-features.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-style: italic;
+    }
+    
+    .selected-feature-item {
+      background: white;
+      color: #000000;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      margin: 0.4rem;
+      display: inline-block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      position: relative;
+      border: 2px solid var(--primary-color);
+      white-space: nowrap;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    
+    .selected-feature-item .remove-feature {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      margin-left: 0.8rem;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 0;
+      width: auto;
+      height: auto;
+    }
+    
+    .finalize-program-btn {
+      width: 100%;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border: 2px solid var(--primary-color);
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .finalize-program-btn:hover {
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .finalize-program-btn:disabled {
+      background: #ccc;
+      border-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .clear-program-btn {
+      width: 100%;
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .clear-program-btn:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(58, 12, 163, 0.3);
+    }
+    
+    .program-counter {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 1.24rem; /* Increased by 60%: 0.9 * 1.6 = 1.44 */
+      color: black;
+      font-weight: 500;
+    }
+    
+    /* Enhanced feature cards */
+    .detailed-module {
+      position: relative;
+      margin: 20px 20px 2rem 20px;
+      padding: 20px;
+      border-radius: 12px;
+      transition: all 0.4s ease;
+      background-color: white;
+      border: 2px solid transparent;
+    }
+    
+    .detailed-module.added {
+      background: linear-gradient(135deg, #dbe4e9 0%, #a8becf 100%);
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 8px 25px rgba(58, 12, 163, 0.15);
+      transform: translateY(-3px);
+      position: relative;
+    }
+    
+    .detailed-module.added::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.1;
+    }
+    
+    .detailed-module.added::after {
+      content: '✓ Added';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--primary-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 10;
+    }
+    
+    .module-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      align-items: stretch;
+    }
+    
+    .module-actions .btn,
+    .add-to-program-btn {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      height: 44px;
+      box-sizing: border-box;
+      margin: 0;
+      vertical-align: top;
+      line-height: 1;
+    }
+    
+    .add-to-program-btn {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border: 2px solid var(--primary-color);
+      cursor: pointer;
+    }
+    
+    .add-to-program-btn:hover {
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .add-to-program-btn:disabled {
+      background: #ccc;
+      border-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .add-to-program-btn.added {
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .add-to-program-btn.added:hover {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border-color: var(--primary-color);
+    }
+    
+    .add-to-program-btn.added {
+      font-weight: 600;
+    }
+    
+    /* Ensure the grid container is wide enough */
+    .detailed-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: none !important;
+      width: 100%;
+      margin: 0;
+    }
+    
+    /* Style the Recognition Program Features title */
+    .program-features-content h2 {
+      color: #444 !important;
+      text-align: left !important;
+      font-size: calc(2.5rem - 0.25rem) !important; /* 0.25rem smaller */
+    }
+    
+    /* Left align the subtitle text */
+    .program-features-content .section-intro {
+      text-align: left !important;
+    }
+    
+    /* Make main page title larger and allow line breaks */
+    .hero h1 {
+      font-size: 3.2rem !important;
+      line-height: 1.1 !important;
+      word-spacing: -0.1em !important;
+      white-space: normal !important;
+    }
+    
+    /* Extend the hero background gradient to cover the entire page */
+    body {
+      background-color: #eaede9;
+      min-height: 100vh;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 1200px) {
+      .sticky-program-builder {
+        position: fixed !important;
+        bottom: 15px !important;
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        transform: translateX(-50%) !important;
+        width: min(90vw, 400px) !important;
+        max-width: 400px;
+        max-height: 45vh;
+        margin: 0;
+        order: 1;
+        padding: 1rem;
+        z-index: 1000;
+        background: white;
+        border: 3px solid var(--primary-color);
+        border-radius: 20px;
+        box-shadow: 0 -10px 30px rgba(58, 12, 163, 0.2);
+        overflow-y: auto;
+        box-sizing: border-box;
+      }
+      
+      .program-builder-wrapper {
+        flex-direction: column;
+        padding: 0 1rem;
+        gap: 1rem;
+        padding-bottom: 45vh; /* Space for sticky builder */
+      }
+      
+      .program-features-content {
+        max-width: 100%;
+        padding-right: 0;
+        order: -1;
+      }
+      
+      .detailed-modules-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        width: 100%;
+      }
+      
+      .detailed-module.custom-module {
+        grid-column: span 1;
+      }
+      
+      .detailed-module {
+        margin: 0;
+        padding: 1.25rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem !important;
+        text-align: center;
+      }
+      
+      .hero p {
+        text-align: center;
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      /* iPad and tablet fixes */
+      .program-builder-wrapper {
+        gap: 1.5rem;
+        padding-bottom: 45vh; /* Adjust space for sticky builder */
+      }
+      
+      .sticky-program-builder {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: min(85vw, 450px) !important;
+        padding: 1rem;
+        max-height: 40vh;
+        max-width: 450px;
+      }
+      
+      .selected-features {
+        min-height: 120px;
+        max-height: 20vh;
+        overflow-y: auto;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .detailed-modules-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.25rem;
+      }
+      
+      .detailed-module.custom-module {
+        grid-column: span 1;
+      }
+      
+      .detailed-module {
+        margin: 0;
+        padding: 1.5rem;
+      }
+      
+      .module-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .module-actions .btn,
+      .add-to-program-btn {
+        width: 100%;
+        text-align: center;
+        min-width: auto;
+        padding: 0.75rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav ul li a {
+        padding: 0.32rem 0.48rem !important; /* 20% smaller: was 0.4rem 0.6rem */
+        font-size: 0.81rem !important; /* 20% smaller: was 1.0125rem */
+      }
+      
+      .program-builder-wrapper {
+        padding: 0 0.75rem;
+        padding-bottom: 48vh; /* More space for sticky builder on small screens */
+      }
+      
+      .detailed-modules-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .detailed-module {
+        margin: 0;
+        padding: 1.25rem;
+        width: 100%;
+      }
+      
+      .detailed-module h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .module-description {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.5;
+      }
+      
+      .module-benefits {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .module-benefits li {
+        margin-bottom: 0.35rem;
+      }
+      
+      .sticky-program-builder {
+        padding: 0.75rem;
+        max-height: 45vh;
+        border-radius: 15px;
+        left: 6%;
+        right: 6%;
+        max-width: 360px;
+        bottom: 8px;
+      }
+      
+      .sticky-program-builder h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .program-counter {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .selected-features {
+        min-height: 120px;
+        max-height: 22vh;
+        overflow-y: auto;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      
+      .selected-feature-item {
+        padding: 0.6rem 1rem;
+        font-size: 0.95rem;
+        margin: 0.25rem;
+        display: block;
+        width: fit-content;
+      }
+      
+      .finalize-program-btn,
+      .clear-program-btn {
+        padding: 0.75rem;
+        font-size: 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+      }
+      
+      .hero {
+        padding: 2rem 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .program-builder-wrapper {
+        padding: 0 0.5rem;
+        padding-bottom: 50vh; /* Maximum space for sticky builder on very small screens */
+      }
+      
+      .detailed-module {
+        margin: 0;
+        padding: 1rem;
+        width: 100%;
+      }
+      
+      .detailed-module h3 {
+        font-size: 1.1rem;
+      }
+      
+      .module-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+      
+      .module-benefits {
+        font-size: 0.85rem;
+      }
+      
+      .sticky-program-builder {
+        padding: 0.6rem;
+        max-height: 48vh;
+        border-radius: 12px;
+        left: 4%;
+        right: 4%;
+        max-width: 340px;
+        bottom: 6px;
+      }
+      
+      .sticky-program-builder h3 {
+        font-size: 1.2rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.5rem !important;
+      }
+      
+      .selected-feature-item {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+      
+      .selected-features {
+        min-height: 100px;
+        max-height: 24vh;
+        overflow-y: auto;
+      }
+      
+      .finalize-program-btn,
+      .clear-program-btn {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* Feature Modal Styles */
+    .feature-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+    }
+    
+    .feature-modal-content {
+      background-color: white;
+      margin: 2% auto;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(58, 12, 163, 0.3);
+      animation: modalSlideIn 0.4s ease-out;
+      position: relative; /* Ensures close button positions relative to this container */
+    }
+    
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* Improved modal close button styles for feature popups */
+    .feature-modal-close {
+      position: absolute !important;
+      right: 20px !important;
+      top: 20px !important; /* Back to original position */
+      font-size: 36px !important; /* 30% larger than 28px */
+      font-weight: 900 !important; /* Much thicker */
+      color: #666 !important;
+      cursor: pointer !important;
+      z-index: 2001 !important; /* Higher than modal z-index */
+      width: 52px !important; /* 30% larger than 40px */
+      height: 52px !important; /* 30% larger than 40px */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 50% !important;
+      transition: all 0.3s ease !important;
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      border: 2px solid transparent !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+      line-height: 0 !important; /* Remove line height completely */
+      text-align: center !important; /* Ensure text is horizontally centered */
+      padding-top: 4px !important; /* Push the × symbol down within the circle */
+    }
+
+    .feature-modal-close:hover {
+      background-color: #f0f0f0 !important;
+      color: var(--primary-color) !important;
+      transform: scale(1.1) !important;
+      border-color: var(--primary-color) !important;
+      box-shadow: 0 4px 12px rgba(58, 12, 163, 0.2) !important;
+    }
+
+    /* Override any conflicting styles from individual pages */
+    #feature-modal .feature-modal-close,
+    .feature-modal .feature-modal-close {
+      position: absolute !important;
+      right: 20px !important;
+      top: 20px !important; /* Back to original position */
+      font-size: 36px !important;
+      font-weight: 900 !important;
+      width: 52px !important;
+      height: 52px !important;
+      z-index: 2001 !important;
+      padding-bottom: 11px !important; /* Push the × symbol down within the circle */
+      line-height: 0 !important;
+    }
+    
+    .feature-modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 2rem 2.5rem;
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+      position: relative;
+    }
+    
+    .feature-modal-header i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+    
+    .feature-modal-header h2,
+    #modal-title {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white !important;
+    }
+    
+    .feature-modal-body {
+      padding: 2rem 2.5rem;
+    }
+    
+    .modal-description {
+      margin-bottom: 2rem;
+      line-height: 1.7;
+      font-size: 1.1rem;
+      color: #444;
+    }
+    
+    .modal-description h4 {
+      color: #444;
+      margin: 1.5rem 0 0.8rem 0;
+      font-size: 1.3rem;
+    }
+    
+    .modal-description .stat-highlight {
+      background: none;
+      color: black;
+      padding: 0;
+      border-radius: 0;
+      font-weight: bold;
+      display: inline;
+      margin: 0;
+      background-image: linear-gradient(120deg, var(--accent-color), #f39c12);
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      padding-bottom: 2px;
+    }
+    
+    .modal-products {
+      margin: 2rem 0;
+    }
+    
+    .modal-products h3 {
+      color: #444;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 1.65rem;
+    }
+    
+    .modal-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .modal-product-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 0.3rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .modal-product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--accent-color);
+    }
+    
+    .modal-product-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.3rem;
+    }
+    
+    .modal-product-card h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* Modal Customize Section */
+    .modal-customize-section {
+      margin: 2rem 0;
+    }
+    
+    .modal-customize-section h3 {
+      color: #444;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 1.65rem;
+    }
+    
+    .modal-customize-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-customize-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+    
+    /* Custom Form Styles */
+    .custom-form-container {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border: 2px solid #e9ecef;
+    }
+    
+    .custom-form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .custom-form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .custom-form-group input,
+    .custom-form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    
+    .custom-form-group input:focus,
+    .custom-form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
+    }
+    
+    .custom-form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .custom-add-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .custom-add-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 12, 163, 0.2);
+    }
+    
+    /* Custom Module Styling */
+    .custom-module {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 2px solid var(--primary-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .custom-module::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    /* Custom form styling within the main card */
+    .detailed-module.custom-module .custom-form-group {
+      margin: 1.5rem 0;
+    }
+    
+    .add-custom-program-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .add-custom-program-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(58, 12, 163, 0.3);
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    }
+    
+    .add-custom-program-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Custom Recognition Feature - Double Width */
+    .detailed-module.custom-module {
+      grid-column: span 2;
+      max-width: none;
+      justify-self: center;
+    }
+    
+    /* Ensure Custom Recognition title is centered */
+    .detailed-module.custom-module h3 {
+      text-align: center !important;
+      display: block !important;
+      width: 100% !important;
+    }
+    
+    /* Ensure icon and text are centered together */
+    .detailed-module.custom-module h3 i.module-icon {
+      margin-right: 0.5rem !important;
+    }
+    
+    /* Center the custom module when it doesn't fit 2 columns */
+    @media (max-width: 700px) {
+      .detailed-module.custom-module {
+        grid-column: span 1;
+        justify-self: center;
+      }
+    }
+    
+    .modal-actions {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: stretch;
+      padding: 1rem 2.5rem;
+      border-top: 1px solid #eee;
+      background: white;
+      z-index: 10;
+      margin-top: 2rem;
+    }
+    
+    .modal-actions .btn {
+      height: 44px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      border: 2px solid transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      line-height: 1;
+      margin: 0;
+      vertical-align: baseline;
+    }
+    
+    .modal-actions .add-to-program-btn {
+      min-width: 150px;
+      padding: 0 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .modal-actions .btn-outline {
+      min-width: 200px;
+      padding: 0 1.5rem;
+    }
+    
+    .modal-actions .add-to-program-btn:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    
+    .modal-actions .btn-outline {
+      background-color: transparent;
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .modal-actions .btn-outline:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .feature-modal-content {
+        width: 95%;
+        margin: 1% auto;
+      }
+      
+      .feature-modal-header {
+        padding: 1.5rem 2rem;
+      }
+      
+      .feature-modal-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .feature-modal-body {
+        padding: 1.5rem 2rem;
+      }
+      
+      .modal-products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+      
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+
+    /* Contact & Delivery Section */
+    .contact-delivery-section {
+        background: #f8f9fa;
+        color: #333;
+        padding: 60px 0;
+        margin-top: 40px;
+        border-top: 1px solid #e9ecef;
+        position: relative;
+        z-index: 1001;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .contact-delivery-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #f8f9fa;
+        z-index: -1;
+    }
+
+    .form-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .contact-delivery-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.2em;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 1em;
+        color: #333;
+    }
+
+    .form-group input {
+        padding: 12px 16px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 1em;
+        background: white;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
+    }
+
+    .form-group small {
+        margin-top: 5px;
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .captcha-group {
+        grid-column: 1 / -1;
+    }
+
+    /* Selected Features Display */
+    .form-selected-features {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 30px;
+        margin: 30px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .form-selected-features h3 {
+        text-align: center;
+        font-size: 1.6em;
+        margin-bottom: 25px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .form-features-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .form-feature-item {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .form-feature-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary-color);
+    }
+
+    .form-feature-item h4 {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .form-feature-item p {
+        font-size: 0.9em;
+        line-height: 1.4;
+        color: #666;
+        font-style: italic;
+    }
+
+    .inspirational-text {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 1.3em;
+        font-weight: 600;
+        color: var(--primary-color);
+        font-style: italic;
+        position: relative;
+        background: linear-gradient(135deg, rgba(58, 12, 163, 0.05), rgba(76, 201, 240, 0.05));
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-color);
+        line-height: 1.1;
+    }
+
+    .inspirational-text::before {
+        content: '"';
+        font-size: 1.5em;
+        color: var(--secondary-color);
+        font-family: serif;
+        margin-right: 0.2em;
+    }
+
+    .inspirational-text::after {
+        content: '"';
+        font-size: 1.5em;
+        color: var(--secondary-color);
+        font-family: serif;
+        margin-left: 0.2em;
+    }
+
+    #generate-plan-btn {
+        display: block;
+        margin: 30px auto 0;
+        padding: 15px 35px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #generate-plan-btn:hover {
+      background: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(58, 12, 163, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 0 15px;
+        }
+        
+        .form-selected-features {
+            padding: 20px;
+        }
+        
+        .form-features-list {
+            grid-template-columns: 1fr;
+        }
+        
+                 .contact-delivery-section h2 {
+             font-size: 1.8em;
+         }
+     }
+
+           /* Consultation Note Styling - Modern Professional */
+      .consultation-note {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(58, 12, 163, 0.15);
+          border-radius: 16px;
+          margin: 2rem 0;
+          padding: 0;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 8px 32px rgba(58, 12, 163, 0.08);
+          transition: all 0.3s ease;
+      }
+
+      .consultation-note:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 40px rgba(58, 12, 163, 0.12);
+          border-color: rgba(58, 12, 163, 0.25);
+      }
+
+      .consultation-note::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--primary-color), var(--secondary-color), transparent);
+      }
+
+      .consultation-note-content {
+          padding: 2rem 2.5rem;
+          display: flex;
+          align-items: flex-start;
+          gap: 1.5rem;
+      }
+
+      .consultation-icon {
+          font-size: 1.5rem;
+          color: var(--primary-color);
+          flex-shrink: 0;
+          background: rgba(58, 12, 163, 0.08);
+          padding: 0.75rem;
+          border-radius: 12px;
+          margin-top: 0.25rem;
+      }
+
+      .consultation-note p {
+          margin: 0;
+          font-size: 1.05rem;
+          line-height: 1.6;
+          color: #2c3e50;
+          font-weight: 400;
+          letter-spacing: 0.01em;
+      }
+
+      .consultation-note strong {
+          color: var(--primary-color);
+          font-weight: 600;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+      }
+
+      @media (max-width: 768px) {
+          .consultation-note-content {
+              padding: 1.75rem 1.5rem;
+              gap: 1rem;
+          }
+          
+          .consultation-icon {
+              font-size: 1.25rem;
+              padding: 0.625rem;
+              border-radius: 10px;
+          }
+          
+          .consultation-note p {
+              font-size: 0.95rem;
+              line-height: 1.5;
+          }
+      }
+
+     /* Plan Summary Section Styling */
+     .container-wide {
+         max-width: 1400px;
+         margin: 0 auto;
+         padding: 0 40px;
+     }
+
+     .plan-summary-section {
+         background: #f8f9fa;
+         padding: 80px 0;
+         margin-top: 40px;
+         border-top: 1px solid #e9ecef;
+         position: relative;
+         z-index: 1002;
+         width: 100%;
+         min-height: 100vh;
+     }
+
+     .plan-summary-section::before {
+         content: '';
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         background: #f8f9fa;
+         z-index: -1;
+     }
+
+     .plan-summary-content {
+         padding: 40px;
+         background: white;
+         border-radius: 12px;
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+         margin-bottom: 30px;
+     }
+
+     .summary-header {
+         text-align: center;
+         margin-bottom: 40px;
+         padding-bottom: 30px;
+         border-bottom: 2px solid #e9ecef;
+     }
+
+     .summary-header h2 {
+         margin-bottom: 20px;
+         margin-top: 20px;
+     }
+
+     .whats-next {
+         margin-bottom: 40px;
+         padding: 30px;
+         background: #f8f9fa;
+         border-radius: 8px;
+         border-left: 4px solid var(--primary-color);
+     }
+
+     .whats-next h3 {
+         margin-bottom: 20px;
+     }
+
+     .whats-next ul {
+         margin-bottom: 0;
+         padding-left: 25px;
+     }
+
+           .whats-next li {
+          margin-bottom: 18px;
+          line-height: 1.6;
+      }
+
+     .summary-details-grid {
+         display: grid;
+         grid-template-columns: 2fr 1fr;
+         gap: 50px;
+         margin-top: 40px;
+     }
+
+     .summary-left h3 {
+         color: var(--primary-color);
+         margin-bottom: 20px;
+         margin-top: 30px;
+         font-size: 1.6em;
+     }
+
+     /* Feature summary output layout styling for program builder 2 - Using high specificity */
+     #summary-modules-list li .feature-summary-output {
+         display: flex;
+         align-items: flex-start;
+         gap: 1rem;
+         margin-bottom: 0.75rem;
+         padding: 0.75rem 0;
+         background: transparent !important;
+     }
+
+     #summary-modules-list li .feature-summary-left {
+         flex: 0 1 auto;
+         min-width: 0;
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+         word-break: break-word;
+     }
+
+     #summary-modules-list li .feature-summary-right {
+         flex: 0 0 auto;
+         display: flex;
+         align-items: center;
+         justify-content: flex-start;
+         margin-top: 68px;
+     }
+
+     /* Special centering for custom features without images */
+     #summary-modules-list li .feature-summary-output.no-images .feature-summary-right {
+         margin-top: 0;
+         align-items: center;
+         min-height: 60px;
+     }
+
+     /* Override the default li styling for our feature items */
+     #summary-modules-list li.feature-summary-item {
+         background-color: transparent !important;
+         padding: 0.5rem 1rem !important;
+         border-radius: 6px !important;
+         margin-bottom: 1rem !important;
+         border-left: 4px solid #23456C !important;
+         padding-left: 1.5rem !important;
+     }
+
+     /* Feature title styling in summary output for build-program2 */
+     #summary-modules-list li .feature-summary-left strong {
+         font-size: calc(1rem + 4px) !important;
+         font-weight: 600 !important;
+     }
+
+     /* Summary feature images styling for build-program2 */
+     #summary-modules-list li .summary-feature-images {
+         display: flex;
+         gap: 8px;
+         flex-wrap: nowrap;
+         margin-top: 8px;
+         overflow-x: auto;
+     }
+
+     #summary-modules-list li .summary-feature-images img {
+         width: 120px;
+         height: 120px;
+         object-fit: cover;
+         border-radius: 8px;
+         border: 2px solid #e9ecef;
+         flex-shrink: 0;
+     }
+
+     .summary-left h3:first-child {
+         margin-top: 0;
+     }
+
+     .summary-left ul {
+         margin-bottom: 40px;
+         padding-left: 25px;
+     }
+
+     .summary-left li {
+         margin-bottom: 12px;
+         color: #333;
+         line-height: 1.6;
+     }
+
+     .summary-left p {
+         margin-bottom: 20px;
+         line-height: 1.6;
+         padding: 20px;
+         background: #f8f9fa;
+         border-radius: 8px;
+     }
+
+     .get-started-faster {
+         background: white;
+         border: 2px solid var(--primary-color);
+         border-radius: 12px;
+         padding: 35px;
+         box-shadow: 0 4px 15px rgba(58, 12, 163, 0.1);
+     }
+
+     .get-started-faster h3 {
+         color: var(--primary-color);
+         margin-bottom: 20px;
+         font-size: 1.3em;
+         text-align: center;
+     }
+
+     .get-started-faster p {
+         color: #666;
+         margin-bottom: 25px;
+         text-align: center;
+         font-size: 0.95em;
+         line-height: 1.6;
+     }
+
+     .contact-info {
+         display: flex;
+         flex-direction: column;
+         gap: 20px;
+     }
+
+     .contact-item {
+         display: flex;
+         align-items: center;
+         gap: 15px;
+         padding: 15px;
+         background: #f8f9fa;
+         border-radius: 8px;
+         transition: all 0.3s ease;
+     }
+
+     .contact-item:hover {
+         background: var(--primary-color);
+         color: white;
+         transform: translateY(-2px);
+         box-shadow: 0 4px 12px rgba(58, 12, 163, 0.2);
+     }
+
+     .contact-item i {
+         color: var(--primary-color);
+         font-size: 1.1em;
+         width: 20px;
+         text-align: center;
+     }
+
+     .contact-item:hover i {
+         color: white;
+     }
+
+     .contact-item span {
+         font-weight: 500;
+         font-size: 0.95em;
+     }
+
+     @media (max-width: 768px) {
+         .summary-details-grid {
+             grid-template-columns: 1fr;
+             gap: 30px;
+         }
+         
+         .container-wide {
+             padding: 0 20px;
+         }
+
+         .plan-summary-content {
+             padding: 25px;
+         }
+
+         .summary-header {
+             margin-bottom: 30px;
+             padding-bottom: 20px;
+         }
+
+         .whats-next {
+             padding: 20px;
+             margin-bottom: 30px;
+         }
+
+         .get-started-faster {
+             padding: 25px;
+         }
+
+         .contact-item {
+             padding: 12px;
+             gap: 12px;
+         }
+     }
+
+    /* Style the View Ideas buttons to be black outline */
+    .learn-more-btn {
+      background-color: transparent !important;
+      color: #000000 !important;
+      border: 2px solid #000000 !important;
+      padding: 0.6rem 1.2rem !important;
+      border-radius: var(--border-radius) !important;
+      text-decoration: none !important;
+      transition: all var(--transition-speed) !important;
+      margin: 0 !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      height: 44px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+    }
+
+    .learn-more-btn:hover {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border-color: #000000 !important;
+      text-decoration: none !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
+     }
+  </style>
+  <!-- Load centralized navigation BEFORE your main script -->
+  <script src="navigation.js"></script>
+</head>
+<body>
+  <!-- Navigation will be inserted here automatically by navigation.js -->
+
+  <!-- Main content wrapper -->
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Build Your<br>Employee Recognition Program</h1>
+        <p>Select from our proven recognition features to create a program tailored to your organization's needs.</p>
+      </div>
+    </section>
+
+    <!-- Program Builder Section -->
+    <section class="program-builder-section container">
+      <div class="program-builder-wrapper">
+        
+        <!-- Main Content: Recognition Program Features -->
+        <div class="program-features-content">
+          <h2>Design Your Program</h2>
+          
+          <div class="detailed-modules-grid">
+            <!-- Welcome Kits Feature -->
+            <div class="detailed-module" data-feature-id="welcome">
+              <h3>
+                <i class="fas fa-gift module-icon"></i>
+                Welcome Kits
+              </h3>
+              <p class="module-description">Make a lasting first impression with thoughtfully curated welcome packages that help new employees feel valued from day one.</p>
+              <ul class="module-benefits">
+                <li>Boost new hire engagement by 48%</li>
+                <li>Reinforce company culture</li>
+                <li>Accelerate team integration</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="welcome">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Welcome Kits">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Years of Service Feature -->
+            <div class="detailed-module" data-feature-id="service">
+              <h3>
+                <i class="fas fa-calendar-alt module-icon"></i>
+                Years of Service
+              </h3>
+              <p class="module-description">Celebrate loyalty and dedication with meaningful milestone awards that show long-term employees their value to your organization.</p>
+              <ul class="module-benefits">
+                <li>Reduce turnover by up to 31%</li>
+                <li>Build company legacy</li>
+                <li>Inspire team loyalty</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="service">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Years of Service">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Performance Bonuses Feature -->
+            <div class="detailed-module" data-feature-id="performance">
+              <h3><i class="fas fa-trophy module-icon"></i>Performance Bonuses</h3>
+              <p class="module-description">Drive excellence with targeted rewards that recognize and incentivize outstanding individual and team achievements.</p>
+              <ul class="module-benefits">
+                <li>Increase productivity by 27%</li>
+                <li>Motivate high performance</li>
+                <li>Set clear success metrics</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="performance">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Performance Bonuses">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Wellness Programs Feature -->
+            <div class="detailed-module" data-feature-id="wellness">
+              <h3><i class="fas fa-heartbeat module-icon"></i>Wellness Programs</h3>
+              <p class="module-description">Promote employee health and well-being through engaging wellness initiatives and rewards that encourage healthy lifestyle choices.</p>
+              <ul class="module-benefits">
+                <li>Reduce healthcare costs by 25%</li>
+                <li>Decrease absenteeism</li>
+                <li>Boost team energy</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="wellness">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Wellness Programs">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Spot Recognition Feature -->
+            <div class="detailed-module" data-feature-id="spot">
+              <h3><i class="fas fa-star module-icon"></i>Spot Recognition</h3>
+              <p class="module-description">Enable immediate acknowledgment of exceptional work with on-the-spot rewards that reinforce positive behaviors.</p>
+              <ul class="module-benefits">
+                <li>Strengthen desired behaviors</li>
+                <li>Create positive momentum</li>
+                <li>Build team morale</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="spot">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Spot Recognition">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Peer-to-Peer Feature -->
+            <div class="detailed-module" data-feature-id="peer">
+              <h3><i class="fas fa-users module-icon"></i>Peer-to-Peer</h3>
+              <p class="module-description">Foster a culture of appreciation where team members can recognize and celebrate each other's contributions.</p>
+              <ul class="module-benefits">
+                <li>Enhance team collaboration</li>
+                <li>Improve workplace culture</li>
+                <li>Increase engagement by 35%</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="peer">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Peer-to-Peer">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Point-Based Rewards Feature -->
+            <div class="detailed-module" data-feature-id="points">
+              <h3><i class="fas fa-star-half-alt module-icon"></i>Point-Based Rewards</h3>
+              <p class="module-description">Create flexible, engaging experiences that allow employees to choose rewards that truly matter to them.</p>
+              <ul class="module-benefits">
+                <li>40% higher satisfaction with choice</li>
+                <li>23% higher participation rates</li>
+                <li>2.5x more likely to seek opportunities</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="points">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Point-Based Rewards">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- General Awards Feature -->
+            <div class="detailed-module" data-feature-id="awards">
+              <h3><i class="fas fa-award module-icon"></i>General Awards</h3>
+              <p class="module-description">Provide structure and ceremony to recognition, creating memorable moments that employees treasure throughout their careers.</p>
+              <ul class="module-benefits">
+                <li>4x more likely to recommend workplace</li>
+                <li>91% remember details years later</li>
+                <li>15% improvement in performance metrics</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="awards">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="General Awards">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Incentive Programs Feature -->
+            <div class="detailed-module" data-feature-id="incentives">
+              <h3><i class="fas fa-concierge-bell module-icon"></i>Incentive Programs</h3>
+              <p class="module-description">Drive specific behaviors and outcomes while creating excitement and engagement around key business objectives.</p>
+              <ul class="module-benefits">
+                <li>28% faster goal achievement</li>
+                <li>22% higher collaboration</li>
+                <li>2.6x more effective than cash</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="incentives">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Incentive Programs">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Attendance Recognition Feature -->
+            <div class="detailed-module" data-feature-id="attendance">
+              <h3><i class="fas fa-calendar-check module-icon"></i>Attendance Recognition</h3>
+              <p class="module-description">Celebrate reliable team members and build a culture where consistent attendance is valued and rewarded.</p>
+              <ul class="module-benefits">
+                <li>Reduce absenteeism by 41%</li>
+                <li>Improve project completion rates</li>
+                <li>Build reliability culture</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="attendance">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Attendance Recognition">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Safety Recognition Feature -->
+            <div class="detailed-module" data-feature-id="safety">
+              <h3><i class="fas fa-shield-alt module-icon"></i>Safety Recognition</h3>
+              <p class="module-description">Promote workplace safety through recognition programs that create safety champions and prevent incidents.</p>
+              <ul class="module-benefits">
+                <li>Reduce workplace incidents by 52%</li>
+                <li>Lower workers' compensation costs</li>
+                <li>Create safety champions</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="safety">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Safety Recognition">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Community Impact Feature -->
+            <div class="detailed-module" data-feature-id="community">
+              <h3><i class="fas fa-hands-helping module-icon"></i>Community Impact</h3>
+              <p class="module-description">Recognize volunteer work and community engagement to build purpose-driven culture and attract mission-focused talent.</p>
+              <ul class="module-benefits">
+                <li>Increase employee satisfaction by 38%</li>
+                <li>Improve cross-department collaboration</li>
+                <li>Attract purpose-driven talent</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="community">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Community Impact">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Patient Care Recognition Feature -->
+            <div class="detailed-module" data-feature-id="patient-care">
+              <h3>
+                <i class="fas fa-heart-pulse module-icon"></i>
+                Patient Care Recognition
+              </h3>
+              <p class="module-description">Recognize exceptional patient care to boost staff motivation, enhance patient satisfaction, and strengthen organizational loyalty.</p>
+              <ul class="module-benefits">
+                <li>12% improvement in patient satisfaction</li>
+                <li>31% lower voluntary turnover</li>
+                <li>Strengthen care quality culture</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="patient-care">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Patient Care Recognition">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Volunteer Recognition Feature -->
+            <div class="detailed-module" data-feature-id="volunteer">
+              <h3>
+                <i class="fas fa-hands-helping module-icon"></i>
+                Volunteer Recognition
+              </h3>
+              <p class="module-description">Celebrate and encourage employee volunteerism with meaningful recognition that strengthens community engagement and corporate social responsibility.</p>
+              <ul class="module-benefits">
+                <li>89% improved employee engagement</li>
+                <li>70% enhanced company reputation</li>
+                <li>Stronger community impact</li>
+              </ul>
+              <div class="module-actions">
+                <button class="btn learn-more-btn" data-feature="volunteer">View Ideas</button>
+                <button class="add-to-program-btn" data-feature="Volunteer Recognition">Add to Program</button>
+              </div>
+            </div>
+
+            <!-- Custom Recognition Feature - Double Width -->
+            <div class="detailed-module custom-module" data-feature-id="custom">
+              <h3 style="text-align: center;"><i class="fas fa-edit module-icon"></i>Customize Your Personalized Program</h3>
+              <p class="module-description">Create a tailored recognition program that addresses your organization's unique values, challenges, and opportunities.</p>
+              
+                <div class="custom-form-group">
+                <label for="custom-program-name">Feature Name*</label>
+                  <input type="text" id="custom-program-name" placeholder="e.g., Innovation Awards, Customer Hero Recognition" required>
+                </div>
+                <div class="custom-form-group">
+                <label for="custom-program-description">Feature Description</label>
+                  <textarea id="custom-program-description" placeholder="Describe what behaviors or achievements you want to recognize..." rows="3"></textarea>
+                </div>
+                <button class="add-custom-program-btn" id="add-custom-program">
+                  <i class="fas fa-plus"></i> Add Custom Program
+                </button>
+              </div>
+              
+          </div>
+        </div>
+
+        <!-- Sticky Program Builder (Right Side) -->
+        <div class="sticky-program-builder">
+          <h3>Your Program</h3>
+          <div class="program-counter">
+            <span id="feature-count">0</span> features selected
+          </div>
+          <div id="selected-features" class="selected-features empty">
+            <span class="empty-message">Select features to build your program!</span>
+          </div>
+          <button id="finalize-program-btn" class="finalize-program-btn" disabled>
+            <i class="fas fa-rocket"></i> Finalize Your Program
+          </button>
+          <button id="clear-program-btn" class="clear-program-btn">
+            <i class="fas fa-redo-alt"></i> Reset My Plan
+          </button>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Contact & Delivery Details Section -->
+    <section id="contact-delivery-section" class="contact-delivery-section" style="display: none;">
+      <div class="form-container">
+                    <h2 style="color: black;">Submit and Save Your Plan.</h2>
+        <form id="plan-details-form">
+          <div class="form-grid">
+              <div class="form-group">
+                <label for="first-name">First Name*</label>
+                <input type="text" id="first-name" name="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name*</label>
+                <input type="text" id="last-name" name="lastName" required>
+              </div>
+              <div class="form-group">
+                <label for="company-name">Company Name*</label>
+                <input type="text" id="company-name" name="companyName" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+                <small>Optional: Only if you'd like a quick call.</small>
+              </div>
+               <!-- Simple Math Captcha -->
+              <div class="form-group">
+                  <label for="captcha">Security Check* <span id="captcha-question"></span> = ?</label>
+                  <input type="number" id="captcha" name="captcha" required onwheel="return false;" onkeydown="if(event.key==='ArrowUp'||event.key==='ArrowDown') return false;">
+                  <input type="hidden" id="captcha-num1">
+                  <input type="hidden" id="captcha-num2">
+              </div>
+          </div>
+          
+          <!-- Selected Features Display -->
+          <div id="form-selected-features" class="form-selected-features">
+            <h3>Your Customized Selection</h3>
+            <div id="form-features-list" class="form-features-list">
+              <!-- Features will be populated by JavaScript -->
+            </div>
+            <div class="inspirational-text">
+              The hardest part of anything is the first step—with us it's the easiest.
+            </div>
+          </div>
+          
+          <!-- Consultation Note -->
+          <div class="consultation-note">
+            <div class="consultation-note-content">
+              <i class="fas fa-handshake consultation-icon"></i>
+              <p>Submit your plan today to receive a <strong>no-charge consultation</strong> with us. We can share ideas that fit your goals and budget -- at no cost to you!</p>
+            </div>
+          </div>
+          
+          <button type="submit" id="generate-plan-btn" class="btn">Save My Plan</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Printable Plan Summary (Initially Hidden) -->
+    <section id="plan-summary-section" class="plan-summary-section" style="display: none;">
+        <div class="container-wide">
+            <div id="plan-summary-content" class="plan-summary-content">
+                <!-- Content generated by JS -->
+                <div class="summary-header">
+                    <img src="assets/images/RBBMarketingLogo.png" alt="RBB Marketing Logo" class="summary-logo">
+                    <h2>Your Customized Selection</h2>
+                </div>
+                <div id="whats-next" class="whats-next">
+                     <h3>What's Next:</h3>
+                     <ul>
+                         <li>We've emailed your summary</li>
+                         <li>Expect tips over the next week</li>
+                         <li>We'll reach out shortly to talk about your personalized plan!</li>
+                     </ul>
+                </div>
+                
+                <div class="summary-details-grid">
+                    <div class="summary-left">
+                        <h3>Your Customized Selection:</h3>
+                        <ul id="summary-modules-list"></ul>
+                        <h3>Your Details:</h3>
+                        <p id="summary-contact-info"></p>
+                    </div>
+                    
+                    <div class="summary-right">
+                        <div class="get-started-faster">
+                            <h3>Get Started Faster</h3>
+                            <p>Have questions or ready to move forward? Contact us directly:</p>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span>(847) 877-2240</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                            <span>chuck.feldman@promo-monster.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="window.print()" class="btn btn-outline print-button">Print Summary</button>
+        </div>
+    </section>
+
+  </main> <!-- Close main content wrapper -->
+
+  <!-- Feature Detail Modal -->
+  <div id="feature-modal" class="feature-modal">
+    <div class="feature-modal-content">
+      <span class="feature-modal-close">&times;</span>
+      <div class="feature-modal-header">
+        <i id="modal-icon" class="fas fa-gift"></i>
+        <h2 id="modal-title">Feature Title</h2>
+      </div>
+      <div class="feature-modal-body">
+        <div id="modal-description" class="modal-description">
+          Description content goes here
+        </div>
+        <div class="modal-products">
+                          <h3>Package It Like a Gift</h3>
+          <div id="modal-products-grid" class="modal-products-grid">
+            <!-- Products will be populated by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="modal-add-feature" class="btn add-to-program-btn">Add to Program</button>
+          <button id="modal-chat" class="btn btn-outline">Talk with us!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-section footer-company">
+          <h3>RBB Marketing</h3>
+          <p>1563 Barclay Blvd<br>Buffalo Grove, Illinois 60089<br>(847) 877-2240</p>
+      </div>
+      <div class="footer-section footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#" onclick="document.querySelector('#search-form-header input[type=search]').focus(); return false;">Search</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="contact.html">Support</a></li>
+          <li><a href="contact.html">Feedback and Suggestions</a></li>
+        </ul>
+      </div>
+      <div class="footer-section footer-social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/rbbmarketing" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://x.com/rbbmarketing" target="_blank" aria-label="X (Twitter)">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+          <a href="https://www.instagram.com/rbbmarketing/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/rbb-marketing/" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">
+      <p>&copy; <span id="current-year"></span> RBB Marketing. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Program Builder 2 Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const selectedFeatures = new Set();
+      const selectedFeaturesContainer = document.getElementById('selected-features');
+      const featureCounter = document.getElementById('feature-count');
+      const finalizeBtn = document.getElementById('finalize-program-btn');
+      const addToProgamBtns = document.querySelectorAll('.add-to-program-btn');
+      const contactSection = document.getElementById('contact-delivery-section');
+      const planDetailsForm = document.getElementById('plan-details-form');
+      const planSummarySection = document.getElementById('plan-summary-section');
+      const summaryModulesList = document.getElementById('summary-modules-list');
+      const summaryContactInfo = document.getElementById('summary-contact-info');
+      const captchaQuestionSpan = document.getElementById('captcha-question');
+      const captchaNum1Input = document.getElementById('captcha-num1');
+      const captchaNum2Input = document.getElementById('captcha-num2');
+      const captchaInput = document.getElementById('captcha');
+      
+      // Local Storage Functions
+      function saveSelectedFeatures() {
+        try {
+          const featuresArray = Array.from(selectedFeatures);
+          localStorage.setItem('selectedFeatures2', JSON.stringify(featuresArray));
+          console.log('Features saved to localStorage (selectedFeatures2):', featuresArray);
+        } catch (error) {
+          console.error('Error saving features to localStorage:', error);
+        }
+      }
+      
+      function loadSelectedFeatures() {
+        try {
+          const savedFeatures = localStorage.getItem('selectedFeatures2');
+          if (savedFeatures) {
+            const featuresArray = JSON.parse(savedFeatures);
+            featuresArray.forEach(feature => {
+              if (feature && feature !== 'undefined') {
+                // Normalize feature names to handle legacy naming inconsistencies
+                let normalizedFeature = feature;
+                if (feature === 'Incentives') {
+                  normalizedFeature = 'Incentive Programs';
+                  console.log('Normalized legacy feature name:', feature, '->', normalizedFeature);
+                }
+                selectedFeatures.add(normalizedFeature);
+              }
+            });
+            console.log('Features loaded from localStorage (selectedFeatures2):', featuresArray);
+            
+            // Save normalized features back to localStorage to fix inconsistencies
+            const normalizedArray = Array.from(selectedFeatures);
+            if (JSON.stringify(featuresArray) !== JSON.stringify(normalizedArray)) {
+              localStorage.setItem('selectedFeatures2', JSON.stringify(normalizedArray));
+              console.log('Updated localStorage with normalized feature names');
+            }
+            
+            return true;
+          }
+        } catch (error) {
+          console.error('Error loading features from localStorage:', error);
+        }
+        return false;
+      }
+      
+      function clearSelectedFeatures() {
+        try {
+          localStorage.removeItem('selectedFeatures2');
+          console.log('Features cleared from localStorage (selectedFeatures2)');
+        } catch (error) {
+          console.error('Error clearing features from localStorage:', error);
+        }
+      }
+      
+      // Generate captcha
+      function generateCaptcha() {
+        if (!captchaQuestionSpan || !captchaNum1Input || !captchaNum2Input) return;
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        captchaQuestionSpan.textContent = `${num1} + ${num2}`;
+        captchaNum1Input.value = num1;
+        captchaNum2Input.value = num2;
+        if (captchaInput) captchaInput.value = '';
+      }
+      
+      // Update modal button state
+      function updateModalButtonState() {
+        const modalAddFeature = document.getElementById('modal-add-feature');
+        if (!modalAddFeature || !modalAddFeature.dataset.currentFeature) {
+          console.log('updateModalButtonState: No modal button or current feature');
+          return;
+        }
+        
+        const currentFeature = modalAddFeature.dataset.currentFeature;
+        const hasFeature = selectedFeatures.has(currentFeature);
+        console.log('updateModalButtonState:', {
+          currentFeature,
+          hasFeature,
+          selectedFeatures: Array.from(selectedFeatures)
+        });
+        
+        if (hasFeature) {
+          modalAddFeature.innerHTML = '✓ Added';
+          modalAddFeature.classList.add('added');
+          modalAddFeature.disabled = true;
+          console.log('Modal button set to Added state');
+        } else {
+          modalAddFeature.textContent = 'Add to Program';
+          modalAddFeature.classList.remove('added');
+          modalAddFeature.disabled = false;
+          console.log('Modal button set to Add to Program state');
+        }
+      }
+
+      // Update the sticky builder display
+      function updateStickyBuilder() {
+        const count = selectedFeatures.size;
+        featureCounter.textContent = count;
+        
+        if (count === 0) {
+          selectedFeaturesContainer.innerHTML = '<span class="empty-message">Select features to build your program</span>';
+          selectedFeaturesContainer.classList.add('empty');
+          finalizeBtn.disabled = true;
+        } else {
+          selectedFeaturesContainer.classList.remove('empty');
+          selectedFeaturesContainer.innerHTML = '';
+          
+          selectedFeatures.forEach(feature => {
+            // Skip undefined or empty features
+            if (!feature || feature === 'undefined') {
+              console.warn('Skipping undefined feature');
+              selectedFeatures.delete(feature);
+              return;
+            }
+            
+            const featureItem = document.createElement('div');
+            featureItem.className = 'selected-feature-item';
+            featureItem.innerHTML = `
+              ${feature}
+              <button class="remove-feature" data-feature="${feature}">×</button>
+            `;
+            selectedFeaturesContainer.appendChild(featureItem);
+          });
+          
+          finalizeBtn.disabled = false;
+        }
+        
+        // Update button states
+        addToProgamBtns.forEach(btn => {
+          const feature = btn.dataset.feature;
+          const moduleCard = btn.closest('.detailed-module');
+          if (selectedFeatures.has(feature)) {
+            btn.innerHTML = '✓ Added';
+            btn.classList.add('added');
+            btn.disabled = true;
+            if (moduleCard) moduleCard.classList.add('added');
+          } else {
+            btn.textContent = 'Add to Program';
+            btn.classList.remove('added');
+            btn.disabled = false;
+            if (moduleCard) moduleCard.classList.remove('added');
+          }
+        });
+        
+        // Update modal button state if modal is open
+        updateModalButtonState();
+        
+        // Save to localStorage whenever features change
+        saveSelectedFeatures();
+      }
+      
+      // Add feature to program
+      addToProgamBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const feature = this.dataset.feature;
+          
+          // Special handling for custom recognition feature
+          if (feature === 'Custom Recognition') {
+            const customName = prompt('Enter your custom recognition program name:');
+            if (customName && customName.trim()) {
+              const customFeatureName = `Custom: ${customName.trim()}`;
+              if (!selectedFeatures.has(customFeatureName)) {
+                selectedFeatures.add(customFeatureName);
+                updateStickyBuilder();
+              } else {
+                alert('This custom feature has already been added to your program.');
+              }
+            } else {
+              alert('Please enter a name for your custom recognition program.');
+            }
+          } else {
+            selectedFeatures.add(feature);
+            updateStickyBuilder();
+          }
+        });
+      });
+      
+      // Remove feature from program
+      selectedFeaturesContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-feature')) {
+          const feature = e.target.dataset.feature;
+          selectedFeatures.delete(feature);
+          updateStickyBuilder();
+        }
+      });
+
+      // Clear all features button
+      const clearProgramBtn = document.getElementById('clear-program-btn');
+      if (clearProgramBtn) {
+        clearProgramBtn.addEventListener('click', function() {
+          if (selectedFeatures.size > 0) {
+            if (confirm('Are you sure you want to start over? This will clear all selected features.')) {
+              selectedFeatures.clear();
+              clearSelectedFeatures();
+              updateStickyBuilder();
+            }
+          }
+        });
+      }
+      
+      // Populate selected features in form
+      function populateFormFeatures() {
+        const formFeaturesList = document.getElementById('form-features-list');
+        if (!formFeaturesList) return;
+
+        // Feature descriptions for the form display
+        const featureDescriptions = {
+          'Welcome Kits': 'A vital first step to improving your employee well-being and efficiency',
+          'Years of Service': 'Building loyalty and recognition that strengthens your organizational foundation',
+          'Years of Service Recognition': 'Building loyalty and recognition that strengthens your organizational foundation',
+          'Performance Bonuses': 'Driving excellence through targeted rewards that motivate and inspire',
+          'Performance Recognition': 'Driving excellence through targeted rewards that motivate and inspire',
+          'Wellness Programs': 'Promoting health and vitality that enhances both personal and professional success',
+          'Spot Recognition': 'Creating positive momentum through immediate acknowledgment of exceptional work',
+          'Peer-to-Peer': 'Fostering a culture of appreciation where team members celebrate each other',
+          'Point-Based Rewards': 'Flexible reward systems that maximize satisfaction through employee choice and engagement',
+          'General Awards': 'Formal recognition programs that create memorable moments and inspire excellence',
+          'Incentive Programs': 'Strategic programs that drive specific behaviors and accelerate goal achievement',
+          'Attendance Recognition': 'Building reliability culture and reducing absenteeism through consistent recognition',
+          'Safety Recognition': 'Creating safety champions and preventing workplace incidents through proactive recognition',
+          'Community Impact': 'Building purpose-driven culture through recognition of volunteer and community engagement',
+          'Custom Recognition': 'Tailored recognition programs that address your unique organizational values and goals',
+          'Patient Care Recognition': 'Recognizing exceptional patient care and fostering a culture of empathy',
+          'Volunteer Recognition': 'Celebrating employee volunteerism to enhance engagement and organizational purpose'
+        };
+
+        formFeaturesList.innerHTML = '';
+        
+        if (selectedFeatures.size === 0) {
+          formFeaturesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">No features selected yet</p>';
+          return;
+        }
+
+        selectedFeatures.forEach(feature => {
+          // Skip undefined or empty features
+          if (!feature || feature === 'undefined') {
+            console.warn('Skipping undefined feature in form');
+            selectedFeatures.delete(feature);
+            return;
+          }
+          
+
+          
+          const featureItem = document.createElement('div');
+          featureItem.className = 'form-feature-item';
+          
+          // Check if this is a custom feature and get its description
+          if (feature.startsWith('Custom: ')) {
+            const customName = feature.replace('Custom: ', '');
+            const customDescription = localStorage.getItem(`custom_desc_${customName}`);
+            featureItem.innerHTML = `
+              <h4>${feature}</h4>
+              <p>${customDescription || 'A tailored recognition program designed specifically for your organization'}</p>
+            `;
+          } else {
+            // Get feature data for product images
+            const featureKey = getFeatureKeyFromName(feature);
+            const featureInfo = featureData[featureKey];
+            
+            // Debug logging for troubleshooting
+            console.log('Form feature mapping:', {
+              feature,
+              featureKey,
+              hasFeatureInfo: !!featureInfo,
+              hasProducts: !!(featureInfo && featureInfo.products),
+              productCount: featureInfo && featureInfo.products ? featureInfo.products.length : 0
+            });
+            
+            let productImagesHTML = '';
+            if (featureInfo && featureInfo.products) {
+              const productImages = featureInfo.products.slice(0, 4).map(product => 
+                `<img src="${product.image}" alt="${product.name}" class="feature-product-thumb" onerror="this.style.display='none'">`
+              ).join('');
+              productImagesHTML = `<div class="feature-product-images">${productImages}</div>`;
+            } else {
+              console.warn('No feature info or products found for:', feature, 'with key:', featureKey);
+            }
+            
+            featureItem.innerHTML = `
+              <h4>${feature}</h4>
+              <p>${featureDescriptions[feature] || 'Enhancing your employee recognition program with proven strategies'}</p>
+              ${productImagesHTML}
+            `;
+          }
+          
+          formFeaturesList.appendChild(featureItem);
+        });
+      }
+
+      // Finalize program button - show contact form like Save & Continue
+      finalizeBtn.addEventListener('click', function() {
+        if (contactSection) {
+          contactSection.style.display = 'block';
+          generateCaptcha();
+          populateFormFeatures();
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      
+      // Handle form submission
+      if (planDetailsForm) {
+        planDetailsForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          // Get form data
+          const firstName = document.getElementById('first-name').value.trim();
+          const lastName = document.getElementById('last-name').value.trim();
+          const companyName = document.getElementById('company-name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const phone = document.getElementById('phone').value.trim();
+          const captchaAnswer = parseInt(captchaInput.value);
+          const correctAnswer = parseInt(captchaNum1Input.value) + parseInt(captchaNum2Input.value);
+          
+          // Validate captcha
+          if (isNaN(captchaAnswer) || captchaAnswer !== correctAnswer) {
+            alert('Security check failed. Please try again.');
+            generateCaptcha();
+            return;
+          }
+          
+          // Feature links mapping for Browse Incentives buttons
+          const featureLinks = {
+            'Welcome Kits': 'https://www.promo-monster.com/:quicksearch.htm?quicksearchbox=Welcome+Kits&LoP=&HiP=',
+            'Years of Service': 'https://www.promo-monster.com/:quicksearch.htm?quicksearchbox=service+award&LoP=&HiP=',
+            'Years of Service Recognition': 'https://www.promo-monster.com/:quicksearch.htm?quicksearchbox=service+award&LoP=&HiP=',
+            'Performance Bonuses': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-employee/',
+            'Performance Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-employee/',
+            'Wellness Programs': 'https://rbbmarketing-clientportal.com/sub_category_post/health-and-wellness-all-products/',
+            'Spot Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/employee-appreciation-all-products/',
+            'Peer-to-Peer': 'https://rbbmarketing-clientportal.com/sub_category_post/back-to-work-desk/',
+            'Point-Based Rewards': 'https://rbbmarketing-clientportal.com/simple_product/merchandise-incentive-program-2/',
+            'General Awards': 'https://www.promo-monster.com/awards-recognition-paper-weights-crystal.htm',
+            'Incentive Programs': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-employee/',
+            'Attendance Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/employee-appreciation-merchandise-drinkware/',
+            'Safety Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/employee-appreciation-merchandise-apparel/',
+            'Community Impact': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-all-products/',
+            'Patient Care Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-all-products/',
+            'Volunteer Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-all-products/',
+            'Custom Recognition': 'https://rbbmarketing-clientportal.com/sub_category_post/incentives-all-products/'
+          };
+          
+          // Populate summary with selected features
+          if (summaryModulesList) {
+            summaryModulesList.innerHTML = '';
+            selectedFeatures.forEach(feature => {
+              const li = document.createElement('li');
+              li.className = 'feature-summary-item';
+              const browseLink = featureLinks[feature] || featureLinks['Custom Recognition'];
+              
+              // Check if this is a custom feature and get its description
+              if (feature.startsWith('Custom: ')) {
+                const customName = feature.replace('Custom: ', '');
+                const customDescription = localStorage.getItem(`custom_desc_${customName}`);
+                li.innerHTML = `
+                  <div class="feature-summary-output no-images">
+                    <div class="feature-summary-left">
+                    <strong>${feature}</strong>
+                      ${customDescription ? `<div class="custom-description">Description: ${customDescription}</div>` : ''}
+                    </div>
+                    <div class="feature-summary-right">
+                      <a href="${browseLink}" target="_blank" class="browse-incentives-btn">Browse Incentives</a>
+                    </div>
+                  </div>
+                `;
+              } else {
+                // Get feature data for product images
+                const featureKey = getFeatureKeyFromName(feature);
+                const featureInfo = featureData[featureKey];
+                
+
+                
+                if (featureInfo && featureInfo.products) {
+                  const productImages = featureInfo.products.slice(0, 4).map(product => 
+                    `<img src="${product.image}" alt="${product.name}">`
+                  ).join('');
+                  
+                  li.innerHTML = `
+                    <div class="feature-summary-output">
+                      <div class="feature-summary-left">
+                      <strong>${feature}</strong>
+                        <div class="summary-feature-images">
+                        ${productImages}
+                        </div>
+                      </div>
+                      <div class="feature-summary-right">
+                        <a href="${browseLink}" target="_blank" class="browse-incentives-btn">Browse Incentives</a>
+                      </div>
+                    </div>
+                  `;
+                } else {
+                  li.innerHTML = `
+                    <div class="feature-summary-output no-images">
+                      <div class="feature-summary-left">
+                      <strong>${feature}</strong>
+                      </div>
+                      <div class="feature-summary-right">
+                        <a href="${browseLink}" target="_blank" class="browse-incentives-btn">Browse Incentives</a>
+                      </div>
+                    </div>
+                  `;
+                }
+              }
+              
+              summaryModulesList.appendChild(li);
+            });
+          }
+          
+          // Populate contact info
+          if (summaryContactInfo) {
+            summaryContactInfo.innerHTML = `
+              <strong>Name:</strong> ${firstName} ${lastName}<br>
+              <strong>Company:</strong> ${companyName}<br>
+              <strong>Email:</strong> ${email}
+              ${phone ? `<br><strong>Phone:</strong> ${phone}` : ''}
+            `;
+          }
+          
+          // Show summary section
+          if (planSummarySection) {
+            planSummarySection.style.display = 'block';
+            planSummarySection.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          // Send emails using EmailJS (if available)
+          if (typeof emailjs !== 'undefined') {
+            const selectedModuleNames = Array.from(selectedFeatures);
+            const emailData = {
+              to_name: `${firstName} ${lastName}`,
+              to_email: email,
+              from_name: 'RBB Marketing',
+              user_name: `${firstName} ${lastName}`,
+              user_company: companyName,
+              user_email: email,
+              user_phone: phone || 'Not provided',
+              selected_modules: selectedModuleNames.join(', '),
+              modules_list: selectedModuleNames.map(name => `• ${name}`).join('\n'),
+              submission_date: new Date().toLocaleDateString()
+            };
+            
+            try {
+              await emailjs.send('service_rbbmarketing', 'template_program_builder', emailData);
+              console.log('Email sent successfully');
+            } catch (error) {
+              console.error('Email sending failed:', error);
+            }
+          }
+        });
+      }
+      
+      // Position sticky builder relative to content
+      function positionStickyBuilder() {
+        const wrapper = document.querySelector('.program-builder-wrapper');
+        const content = document.querySelector('.program-features-content');
+        const builder = document.querySelector('.sticky-program-builder');
+        
+        if (wrapper && content && builder) {
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const contentRect = content.getBoundingClientRect();
+          
+          // Calculate position: content right edge + 50px gap
+          const leftPosition = contentRect.right + 50;
+          
+          // Make sure it doesn't go off screen
+          const maxLeft = window.innerWidth - 340; // 320px width + 20px margin
+          const finalLeft = Math.min(leftPosition, maxLeft);
+          
+          builder.style.left = finalLeft + 'px';
+        }
+      }
+      
+      // Update position on scroll and resize
+      function handleScroll() {
+        positionStickyBuilder();
+      }
+      
+      function handleResize() {
+        positionStickyBuilder();
+      }
+      
+      // Helper function to get feature key from display name
+      function getFeatureKeyFromName(name) {
+        const nameMapping = {
+          'Welcome Kits': 'welcome',
+          'Years of Service': 'service',
+          'Years of Service Recognition': 'service', // Handle both naming variations
+          'Performance Bonuses': 'performance',
+          'Performance Recognition': 'performance', // Handle both naming variations
+          'Wellness Programs': 'wellness',
+          'Spot Recognition': 'spot',
+          'Peer-to-Peer': 'peer',
+          'Point-Based Rewards': 'points',
+          'General Awards': 'awards',
+          'Incentive Programs': 'incentives',
+          'Incentives': 'incentives', // Fallback for build-program.html title text
+          'Attendance Recognition': 'attendance',
+          'Safety Recognition': 'safety',
+          'Community Impact': 'community',
+          'Patient Care Recognition': 'patient-care',
+          'Volunteer Recognition': 'volunteer',
+          'Custom Recognition': 'custom'
+        };
+        const result = nameMapping[name] || null;
+        
+        // Debug logging for unmapped features
+        if (!result && name && !name.startsWith('Custom:')) {
+          console.warn('No mapping found for feature name:', name);
+        }
+        
+        return result;
+      }
+
+      // Feature modal data with real statistics and compelling content
+      const featureData = {
+        welcome: {
+          title: "Welcome Kits",
+          icon: "fas fa-gift",
+          description: `
+            <p>First impressions matter more than ever in today's competitive talent market. A thoughtfully crafted welcome kit sets the tone for an employee's entire journey with your organization.</p>
+            
+            <h4>Why Welcome Kits Drive Success</h4>
+            <!-- Source: https://www.shrm.org/hr-today/news/hr-magazine/pages/0914-onboarding.aspx -->
+            <p>Research from the Society for Human Resource Management (SHRM) shows that new employees who went through a structured onboarding program were <span class="stat-highlight stat-tooltip">69% more likely to remain<span class="tooltip-content">Source: SHRM</span></span> with the company for up to three years.</p>
+            
+            <h4>Proven Benefits</h4>
+            <!-- Source: https://www.globenewswire.com/news-release/2011/11/17/459702/238734/en/Onboarding-2011-The-Path-to-Productivity.html -->
+            <p>Organizations with a standard onboarding process see <span class="stat-highlight stat-tooltip">54% greater new-hire productivity<span class="tooltip-content">Source: Aberdeen Group</span></span> and <span class="stat-highlight stat-tooltip">50% greater new-hire retention<span class="tooltip-content">Source: Aberdeen Group</span></span> according to the Aberdeen Group. Your welcome kit becomes the first touchpoint in this critical process.</p>
+            
+            <h4>What Makes Welcome Kits Effective</h4>
+            <p>The most successful welcome kits combine practical items employees will use daily with branded elements that reinforce company culture. From premium drinkware to tech accessories that enhance productivity, each item serves as a daily reminder of belonging.</p>
+            <p><span class="stat-highlight">Customize your onboarding kits</span> to greet new hires with branded merchandise, information packets, and all essentials to start their journey.</p>
+          `,
+          products: [
+            { name: "Tote Bag", image: "assets/images/tote1.jpg" },
+                      { name: "Welcome Kit", image: "assets/images/kit1.PNG" },
+          { name: "Travel Bag", image: "assets/images/travelbag1.jpg" },
+          { name: "Complete Kit", image: "assets/images/BrandMErchandise2.png" }
+        ],
+        customizeProducts: [
+          { name: "Clothing Bundle", image: "assets/images/clothes1.PNG" },
+          { name: "Custom Bundle", image: "assets/images/bundle1.PNG" },
+                      { name: "Custom Kit", image: "assets/images/kit2.PNG" },
+          { name: "Custom Gift Box", image: "assets/images/bundle3.PNG" },
+          { name: "Drinkware", image: "assets/images/waterbottle1.png" },
+          { name: "Welcome Note Cards", image: "assets/images/Mat1.PNG" },
+          { name: "Fun Gifts", image: "assets/images/socks1.PNG" },
+          { name: "Apparel", image: "assets/images/jacket1.PNG" }
+          ]
+        },
+        service: {
+          title: "Years of Service Recognition",
+          icon: "fas fa-calendar-alt",
+          description: `
+            <p>Long-term employee retention is one of the greatest challenges facing modern organizations. Years of service recognition programs create powerful emotional connections that keep your best talent engaged.</p>
+            
+            <h4>The High Cost of Turnover</h4>
+            <!-- Source: https://www.americanprogress.org/article/there-are-significant-business-costs-to-replacing-employees/ -->
+            <p>The Center for American Progress reports that replacing an employee can cost anywhere from <span class="stat-highlight stat-tooltip">16% to 213% of their annual salary<span class="tooltip-content">Source: Center for American Progress</span></span>. Retaining experienced team members isn't just a cultural goal—it's a financial imperative.</p>
+            
+            <h4>Building Legacy and Loyalty</h4>
+            <!-- Source: https://www.forbes.com/sites/joshbersin/2012/06/13/new-research-unlocks-the-secret-of-employee-recognition/ -->
+            <p>Service recognition programs demonstrate that you value longevity and growth. Companies with modern recognition programs have <span class="stat-highlight stat-tooltip">31% lower voluntary turnover<span class="tooltip-content">Source: Bersin by Deloitte</span></span> than those with outdated or no programs, according to research from Bersin by Deloitte.</p>
+            
+            <h4>Building Lasting Loyalty</h4>
+            <p>Encourages long-term retention, shows appreciation for loyalty, and reinforces a culture of stability and commitment. Celebrate employee milestones with personalized gifts or awards recognizing 1, 5, 10, 20+ years of dedication. Let's explore the possibilities and tailor a program just for you.</p>
+          `,
+          products: [
+            { name: "Pins and Jewelry", image: "assets/images/PinsAndBadges.PNG" },
+            { name: "Crystal", image: "assets/images/GlassAward.PNG" },
+            { name: "Congratulations Note", image: "assets/images/AwardImage.PNG" },
+            { name: "Customizable Cubes", image: "assets/images/YearsOfService_Safety.PNG" }
+          ],
+          customizeProducts: [
+            { name: "Wall Plaque", image: "assets/images/WallAward.PNG" },
+            { name: "Customized Merch", image: "assets/images/ServicePins.PNG" },
+            { name: "Awards", image: "assets/images/EOM.png" },
+            { name: "Plateau Merch Catalog", image: "assets/images/CustomGiftLevels.PNG" }
+          ]
+        },
+        performance: {
+          title: "Performance Recognition",
+          icon: "fas fa-trophy",
+          description: `
+            <p>High performers drive organizational success, yet many feel undervalued. Strategic performance recognition transforms your top talent into engaged champions of your company's mission.</p>
+            
+            <h4>The Performance-Recognition Connection</h4>
+            <!-- Source: https://www.achievers.com/blog/employee-recognition-and-productivity/ -->
+            <p>When high performers feel valued, they become force multipliers. Organizations that prioritize employee recognition see a <span class="stat-highlight stat-tooltip">21% increase in productivity<span class="tooltip-content">Source: Achievers</span></span>, according to a report by Achievers.</p>
+            
+            <h4>Beyond Monetary Rewards</h4>
+            <!-- Source: https://www2.deloitte.com/us/en/insights/focus/human-capital-trends/2018/employee-recognition-in-a-digital-world.html -->
+            <p>While financial bonuses matter, tangible recognition creates lasting emotional connections. Deloitte found that <span class="stat-highlight stat-tooltip">85% of employees<span class="tooltip-content">Source: Deloitte</span></span> are more motivated when management offers regular feedback, recognition, and rewards.</p>
+            
+            <h4>Creating a Culture of Excellence</h4>
+            <p>Performance recognition programs signal to all employees that exceptional work is noticed and valued. This creates positive peer pressure and aspirational behavior throughout your organization, driving overall performance improvements and establishing clear expectations for success.</p>
+          `,
+          products: [
+            { name: "Arctic Zone Mug", image: "assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg" },
+            { name: "Premium Apparel", image: "assets/images/triblend-tshirts.jpg" },
+            { name: "Travel Bag", image: "assets/images/Weekend Travel bag.jpg" },
+            { name: "Sling Bag", image: "assets/images/Popular Sling Bag.jpg" }
+          ]
+        },
+        wellness: {
+          title: "Wellness Programs",
+          icon: "fas fa-heartbeat",
+          description: `
+            <p>Employee wellness isn't just a benefit—it's a strategic business imperative that directly impacts productivity, healthcare costs, and organizational culture.</p>
+            
+            <h4>The Business Case for Wellness</h4>
+            <!-- Source: https://www.cdc.gov/pcd/issues/2010/jul/10_0013.htm -->
+            <p>A comprehensive analysis published by the CDC found that for every dollar invested in wellness programs, companies can see an average return of <span class="stat-highlight stat-tooltip">$3.27 in reduced medical costs<span class="tooltip-content">Source: CDC</span></span>. Other studies have shown a <span class="stat-highlight stat-tooltip">28% reduction in sick days<span class="tooltip-content">Source: Harvard Business Review</span></span> and a <span class="stat-highlight stat-tooltip">26% reduction in healthcare costs<span class="tooltip-content">Source: Harvard Business Review</span></span>.</p>
+            
+            <h4>More Than Physical Health</h4>
+            <!-- Source: https://hbr.org/2010/12/whats-the-hard-return-on-employee-wellness-programs -->
+                        <p>Modern wellness programs address mental health and work-life balance. Johnson & Johnson's wellness program famously saved the company <span class="stat-highlight stat-tooltip">$250 million<span class="tooltip-content">Source: Harvard Business Review</span></span> in healthcare costs over a decade, as reported by Harvard Business Review.</p>
+              
+              <h4>Wellness as a Culture Builder</h4>
+              <!-- Source: https://www.gallup.com/workplace/236021/why-wellness-program-isnt-enough.aspx -->
+              <p>Wellness initiatives demonstrate genuine care for employee wellbeing. Employees who feel their company cares about their well-being are <span class="stat-highlight stat-tooltip">3x more likely<span class="tooltip-content">Source: Gallup</span></span> to be engaged at work, according to Gallup research.</p>
+          `,
+          products: [
+            { name: "Arctic Zone Mug", image: "assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg" },
+            { name: "Cozy Sherpa", image: "assets/images/Warm and Cozy Sherpa.jpg" },
+            { name: "Travel Bag", image: "assets/images/Weekend Travel bag.jpg" },
+            { name: "Sling Bag", image: "assets/images/Popular Sling Bag.jpg" }
+          ]
+        },
+        spot: {
+          title: "Spot Recognition",
+          icon: "fas fa-star",
+          description: `
+            <p>Spot recognition allows managers and peers to acknowledge exceptional performance in real-time. Whether it's staying late to comfort a patient's family or stepping up during a staffing gap, this immediate, meaningful feedback energizes employees and reinforces positive behavior.</p>
+            
+            <h4>The Power of Now: Why Timeliness Matters</h4>
+                             <p>For recognition to be most effective, it needs to be timely. Quick recognition creates momentum, boosts morale, and keeps employees engaged—especially during high-stress periods.</p>
+              
+              <h4>Effort and Appreciation</h4>
+              <!-- Source: https://bucketlistrewards.com/blog/blog-employee-recognition-and-rewards-program-implementation/ -->
+              <p>When recognition is timely, it drives motivation. <span class="stat-highlight stat-tooltip">69% of employees<span class="tooltip-content">Source: Bucketlist Rewards</span></span> report they would work harder if they felt their efforts were better appreciated. Spot awards are a powerful tool to bridge this appreciation gap.</p>
+              
+              <h4>Building Momentum and Retention</h4>
+              <!-- Source: https://bucketlistrewards.com/blog/blog-employee-recognition-and-rewards-program-implementation/ -->
+              <p>Frequent recognition builds momentum and contributes to retention. Organizations with effective recognition programs can see up to a <span class="stat-highlight stat-tooltip">40% reduction in voluntary turnover<span class="tooltip-content">Source: Bucketlist Rewards</span></span>, as employees feel consistently valued for their contributions.</p>
+          `,
+          products: [
+            { name: "Spot Recognition", image: "assets/images/EOM.png" },
+            { name: "Gift Cards", image: "assets/images/GiftCards.png" },
+            { name: "Redeemable Tokens", image: "assets/images/CustomizedTokens.png" },
+            { name: "Give Points", image: "assets/images/Points.jpg" }
+          ]
+        },
+        peer: {
+          title: "Peer-to-Peer Recognition",
+          icon: "fas fa-users",
+          description: `
+            <p>The most authentic recognition often comes from colleagues who understand the daily challenges and contributions of their peers. Peer-to-peer recognition builds stronger team bonds and creates a culture of mutual appreciation.</p>
+            
+            <h4>The Power of Authentic Recognition</h4>
+                        <p>Peer-to-peer recognition empowers employees at all levels to highlight each other's contributions. This grassroots form of appreciation builds trust, fosters teamwork, and promotes inclusivity in the workplace.</p>
+              
+              <h4>Fostering Collaboration and Growth</h4>
+              <!-- Source: https://www.terryberry.com/blog/employee-recognition-statistics/ -->
+              <p>Peer recognition directly fuels teamwork. A study from SHRM found that <span class="stat-highlight stat-tooltip">41% of companies<span class="tooltip-content">Source: SHRM</span></span> using peer-to-peer recognition reported increased customer satisfaction, a direct result of improved collaboration. Furthermore, research from Achievers shows that peer feedback can improve an individual's performance by <span class="stat-highlight stat-tooltip">14%<span class="tooltip-content">Source: Achievers</span></span>.</p>
+              
+              <h4>Driving Insights</h4>
+                      <p>Peer recognition also gives managers insight into behind-the-scenes contributions that might otherwise go unnoticed. This leads to a more connected workforce, better communication, and ultimately, stronger patient outcomes.</p>
+          `,
+          products: [
+            { name: "Appreciation Gifts", image: "assets/images/AppreciationMagnets.png" },
+            { name: "Customized Tokens", image: "assets/images/CustomizedTokens.png" },
+            { name: "Small Gifts", image: "assets/images/StickyNotes.png" },
+            { name: "Thank You Notes", image: "assets/images/ThankyouNotes.png" }
+          ]
+        },
+        points: {
+          title: "Point-Based Rewards",
+          icon: "fas fa-star-half-alt",
+          description: `
+            <p>Point-based reward systems create flexible, engaging experiences that allow employees to earn points for reaching milestones, demonstrating leadership, or meeting departmental goals, then choose rewards that truly matter to them. This approach maximizes satisfaction while minimizing administrative overhead.</p>
+            
+                          <h4>Retention and Engagement</h4>
+                             <p>The choice and visibility of rewards builds friendly competition and excitement across teams, reinforcing engagement, and aligns behavior with organizational priorities. This includes efficiency, patient satisfaction, and quality care metrics.</p>
+                
+                <h4>Flexible and Scalable</h4>
+               <p>Point systems allow you to recognize both small daily achievements and major milestones with appropriate reward levels. Companies using point-based systems report <span class="stat-highlight stat-tooltip">23% higher participation rates<span class="tooltip-content">Source: RecogNation Study</span></span> in recognition programs compared to fixed-reward systems.</p>
+                
+                <h4>Building Engagement Over Time</h4>
+               <p>Points create anticipation and goal-setting behavior among employees. Studies show that <span class="stat-highlight stat-tooltip">employees earning points are 2.5x more likely<span class="tooltip-content">Source: IRF Psychology of Points Study</span></span> to actively seek opportunities to contribute beyond their basic job requirements, driving innovation and continuous improvement.</p>
+          `,
+          products: [
+            { name: "Gift Cards", image: "assets/images/Popular Sling Bag.jpg" },
+            { name: "Experience Vouchers", image: "assets/images/Weekend Travel bag.jpg" },
+            { name: "Product Catalog", image: "assets/images/Points.jpg" },
+            { name: "Custom Rewards", image: "assets/images/Ceramic Mugs.jpg" }
+          ]
+        },
+        awards: {
+          title: "General Awards",
+          icon: "fas fa-award",
+          description: `
+            <p>Formal awards—such as engraved crystal trophies or plaques—offer public, prestigious recognition for outstanding contributions. Presented during annual ceremonies or team meetings, these awards create moments of pride and boost employee visibility across departments.</p>
+            
+                          <h4>The Power of Formal Recognition</h4>
+                             <p>Formal awards carry more weight than informal recognition because they represent organizational values and standards. Research shows that <span class="stat-highlight stat-tooltip">employees receiving formal awards are 4x more likely<span class="tooltip-content">Source: Gallup Workplace Awards Study</span></span> to recommend their workplace to others, significantly improving your employer brand.</p>
+                
+                <h4>Creating Memorable Moments</h4>
+               <p>Award ceremonies and presentations create lasting memories that extend far beyond the moment of recognition. The Cicero Group research found that <span class="stat-highlight stat-tooltip">employees prefer awards over cash<span class="tooltip-content">Source: Cicero Group Research</span></span> because they can see the item and remember the experience, demonstrating the lasting impact of formal programs.</p>
+                
+                <h4>Setting Standards of Excellence</h4>
+               <p>Recognizing excellence in categories like innovation, teamwork, or patient advocacy sets clear expectations and highlights role models within the organization. This reinforces core values, elevates culture, and shows potential hires that your organization celebrates and invests in its people.</p>
+          `,
+          products: [
+            { name: "Custom Plaques", image: "assets/images/PlaquesWithStands.png" },
+            { name: "Trophy Collection", image: "assets/images/UniqueTrophies.png" },
+            { name: "Custom Glassware", image: "assets/images/CustomGlassware.png.png" },
+            { name: "Unique Awards", image: "assets/images/timepieces.png" }
+          ]
+        },
+        incentives: {
+          title: "Incentive Programs",
+          icon: "fas fa-concierge-bell",
+          description: `
+            <p>Strategic incentive programs drive specific behaviors and outcomes while creating excitement and engagement around key business objectives. These programs turn abstract goals into tangible, achievable milestones.</p>
+            
+                          <h4>Driving Specific Outcomes</h4>
+                             <p>Unlike general recognition, incentive programs target specific behaviors or results that directly impact business success. Companies using targeted incentives report <span class="stat-highlight stat-tooltip">28% faster goal achievement<span class="tooltip-content">Source: SCIRP Gamification Study</span></span> compared to organizations relying solely on traditional motivational approaches.</p>
+                
+                <h4>Creating Healthy Competition</h4>
+               <p>Well-designed incentive programs foster positive competition that energizes teams without creating destructive rivalry. Research shows that <span class="stat-highlight stat-tooltip">teams with incentive programs show 22% higher collaboration<span class="tooltip-content">Source: SCIRP Gamification Study</span></span> when programs emphasize collective success alongside individual achievement.</p>
+                
+                <h4>Cost-Saving Initiative</h4>
+               <p>Incentive programs tied to cost-saving initiatives—such as reducing waste, managing overtime, or improving patient throughput—encourage smart, proactive behavior. Employees are rewarded not just for effort but for results that help the organization operate more efficiently. </p>
+          `,
+          products: [
+            { name: "Experience Packages", image: "assets/images/Weekend Travel bag.jpg" },
+            { name: "Tech Accessories", image: "assets/images/UsefulTech.png" },
+            { name: "Premium Merchandise", image: "assets/images/UsefulUtilities.png" },
+            { name: "Custom Incentives", image: "assets/images/Apparel2.png" }
+          ]
+        },
+        attendance: {
+          title: "Attendance Recognition",
+          icon: "fas fa-calendar-check",
+          description: `
+            <p>Rewarding employees for consistent attendance encourages dependability and helps reduce the disruption caused by callouts or chronic absenteeism. This is especially vital in healthcare, where patient care continuity is critical.</p>
+            
+            <h4>The Hidden Cost of Absenteeism</h4>
+            <p>The CDC estimates that absenteeism costs U.S. employers <span class="stat-highlight stat-tooltip">$225.8 billion annually<span class="tooltip-content">Source: CDC</span></span> in lost productivity. Companies with attendance recognition programs see <span class="stat-highlight stat-tooltip">41% reduction in unscheduled absences<span class="tooltip-content">Source: SHRM</span></span> according to research from the Society for Human Resource Management.</p>
+            
+            <h4>Building Reliability Culture</h4>
+            <p>When attendance is recognized and celebrated, it creates a culture where being present matters. Studies show that <span class="stat-highlight stat-tooltip">teams with attendance recognition have 23% better project completion rates<span class="tooltip-content">Source: Workplace Reliability Research</span></span> and <span class="stat-highlight stat-tooltip">18% higher customer satisfaction scores<span class="tooltip-content">Source: Workplace Reliability Research</span></span> due to improved consistency and reliability.</p>
+            
+            <h4>Beyond Perfect Attendance</h4>
+            <p>Modern attendance programs recognize improvement, not just perfection. Whether it's monthly or quarterly-this recognition can include points, small gifts, or public praise, all of which boost employee commitment. This reduces overtime burden on others, and positively impacts the patient experience and care quality.</p>
+          `,
+          // <p>Modern attendance programs recognize improvement, not just perfection. Employees who improve their attendance by <span class="stat-highlight stat-tooltip">15% or more show 34% higher engagement<span class="tooltip-content">Source: Gallup</span></span> and are <span class="stat-highlight stat-tooltip">2.8x more likely<span class="tooltip-content">Source: Gallup</span></span> to recommend their workplace to others, according to Gallup research.</p>
+          products: [
+            { name: "Public Recognition", image: "assets/images/PublicRecognition.jpg" },
+            { name: "Points System", image: "assets/images/Points.jpg" },
+            { name: "Drinkware", image: "assets/images/Drinkware.png" },
+            { name: "Apparel", image: "assets/images/Apparel.png" }
+          ]
+        },
+        safety: {
+          title: "Safety Recognition",
+          icon: "fas fa-shield-alt",
+          description: `
+            <p>Safety recognition programs encourage adherence to protocols and promote a culture of accountability. Recognizing teams or individuals for accident-free days, compliance with PPE guidelines, or participation in safety trainings increases awareness and reduces workplace incidents.</p>
+            
+            <h4>The Business Impact of Safety</h4>
+            <p>OSHA reports that workplace injuries cost employers <span class="stat-highlight stat-tooltip">$170 billion annually<span class="tooltip-content">Source: OSHA</span></span> in direct and indirect costs. Companies with robust safety recognition programs experience <span class="stat-highlight stat-tooltip">52% fewer workplace incidents<span class="tooltip-content">Source: National Safety Council</span></span> and <span class="stat-highlight stat-tooltip">40% lower workers' compensation costs<span class="tooltip-content">Source: National Safety Council</span></span> according to the National Safety Council.</p>
+            
+            <h4>Creating Safety Champions</h4>
+            <p>Recognition programs transform employees into safety advocates. Research shows that <span class="stat-highlight stat-tooltip">workplaces with safety recognition have 85% higher safety suggestion rates<span class="tooltip-content">Source: Workplace Safety Research</span></span> and <span class="stat-highlight stat-tooltip">67% better near-miss reporting<span class="tooltip-content">Source: Workplace Safety Research</span></span>, creating proactive safety cultures that prevent incidents before they occur.</p>
+            
+            <h4>Psychological and Physical Safety</h4>
+            <p>When employees feel recognized for safety contributions, it creates psychological safety that encourages open communication about risks. Teams with safety recognition show <span class="stat-highlight stat-tooltip">43% better safety communication<span class="tooltip-content">Source: Industrial Psychology Research</span></span> and <span class="stat-highlight stat-tooltip">31% faster hazard resolution times<span class="tooltip-content">Source: Industrial Psychology Research</span></span>, according to industrial psychology research.</p>
+          `,
+          products: [
+            { name: "Insulated Drinkware", image: "assets/images/InsulatedDrinkware.png" },
+            { name: "Point System", image: "assets/images/Points.jpg" },
+            { name: "Lunch Cooler", image: "assets/images/LunchCooler.png" },
+            { name: "Team Tech Items", image: "assets/images/TechItems.png" }
+          ]
+        },
+        community: {
+          title: "Community Impact",
+          icon: "fas fa-hands-helping",
+          description: `
+            <p>Programs that reward employees for participating in community outreach—such as health fairs, blood drives, or charity events—build a culture of compassion and service. This kind of recognition reinforces the organization's mission beyond the walls of the facility.</p>
+            
+            <h4>The Purpose-Driven Workforce</h4>
+            <p>Deloitte research shows that <span class="stat-highlight stat-tooltip">73% of millennials<span class="tooltip-content">Source: Deloitte</span></span> are willing to pay extra for sustainable products and services, and <span class="stat-highlight stat-tooltip">83% consider a company's purpose<span class="tooltip-content">Source: Deloitte</span></span> when deciding where to work. Community impact programs address this growing demand for meaningful work.</p>
+            
+            <h4>Building Team Bonds Through Service</h4>
+            <p>Volunteer activities create unique bonding experiences outside normal work contexts. Companies with community engagement programs report <span class="stat-highlight stat-tooltip">38% higher employee satisfaction<span class="tooltip-content">Source: Points of Light Foundation</span></span> and <span class="stat-highlight stat-tooltip">45% better cross-department collaboration<span class="tooltip-content">Source: Points of Light Foundation</span></span> according to Points of Light Foundation research.</p>
+            
+            <h4>Attracting Mission-Driven Talent</h4>
+            <p>Organizations known for community impact attract employees who care deeply about their work's broader meaning. These purpose-driven employees show <span class="stat-highlight stat-tooltip">16% higher performance<span class="tooltip-content">Source: Harvard Business Review</span></span> and <span class="stat-highlight stat-tooltip">125% lower burnout rates<span class="tooltip-content">Source: Harvard Business Review</span></span> compared to employees in organizations without clear community mission, as reported by Harvard Business Review.</p>
+          `,
+          products: [
+            { name: "Unique Signage", image: "assets/images/Signage.png" },
+            { name: "Fun Gifts", image: "assets/images/socks1.PNG" },
+            { name: "Matching Apparel", image: "assets/images/Apparel3.png.png" },
+            { name: "Custom Drinkware", image: "assets/images/Drinkware2.png.png" }
+          ]
+        },
+        'patient-care': {
+          title: "Patient Care Recognition",
+          icon: "fas fa-heart-pulse",
+          description: `
+            <p>Recognizing employees for exceptional patient care strengthens healthcare organizations by fostering a culture of empathy and excellence. The importance of patient care recognition, its benefits, and its impact on staff and patients is critical and supported by key statistics.</p>
+            
+            <h4>Impact on Patient Satisfaction</h4>
+            <!-- Source: Press Ganey -->
+            <p>Hospitals with robust recognition programs see a <span class="stat-highlight stat-tooltip">12% improvement in patient satisfaction scores<span class="tooltip-content">Source: Press Ganey</span></span>, demonstrating the direct impact of celebrating caring behavior.</p>
+            
+            <h4>Staff Retention and Engagement</h4>
+            <!-- Source: Gallup -->
+            <p>Healthcare organizations with strong recognition programs experience <span class="stat-highlight stat-tooltip">31% lower voluntary turnover<span class="tooltip-content">Source: Gallup</span></span>, creating a workplace where employees feel valued and motivated to deliver exceptional care.</p>
+            
+            <h4>Building a Culture of Excellence</h4>
+            <p>Recognition reinforces your core mission of exceptional patient care and encourages staff to prioritize empathy in every interaction. Enable peer nominations to foster a culture of mutual appreciation and shared commitment to excellence.</p>
+          `,
+          products: [
+            { name: "Comfort Blankets", image: "assets/images/Blankets.png.png" },
+            { name: "Personalized Pens", image: "assets/images/PersonalizedPen.png.png" },
+            { name: "Custom Socks", image: "assets/images/CustomSocks.png.png" },
+            { name: "Customizable Awards", image: "assets/images/ServicePins.PNG" }
+          ]
+        },
+        volunteer: {
+          title: "Volunteer Recognition",
+          icon: "fas fa-hands-helping",
+          description: `
+            <p>Recognizing employees who volunteer—whether within the organization or externally—supports a purpose-driven culture and encourages civic engagement. Tracking and celebrating volunteer hours through branded items, awards, or time-off incentives deepens employee satisfaction and enhances your organization's image.</p>
+            
+            <h4>The Impact of Employee Volunteering</h4>
+            <!-- Source: Deloitte Volunteer Impact Research -->
+            <p>According to Deloitte's research, companies with volunteer recognition programs see <span class="stat-highlight stat-tooltip">89% higher employee engagement scores<span class="tooltip-content">Source: Deloitte Volunteer Impact Research</span></span> and <span class="stat-highlight stat-tooltip">70% stronger positive company reputation<span class="tooltip-content">Source: Deloitte Volunteer Impact Research</span></span>.</p>
+            
+            <h4>Building Community Connections</h4>
+            <p>When employees are recognized for their volunteer efforts, they're more likely to continue giving back. Our volunteer recognition program helps create a sustainable culture of community service.</p>
+            
+            <h4>Recognition That Inspires</h4>
+            <p>From comfortable apparel for volunteer events to practical items that show appreciation, each recognition piece is designed to celebrate and encourage continued community involvement.</p>
+          `,
+          products: [
+            { name: "Blankets", image: "assets/images/Blankets.png.png" },
+            { name: "Apparel", image: "assets/images/Apparel.png" },
+            { name: "Sling Bag", image: "assets/images/SlingBag2.png" },
+            { name: "Insulated Drinkware", image: "assets/images/InsulatedDrinkware.png" }
+          ]
+        },
+        custom: {
+          title: "Customize Your Personalized Program",
+          icon: "fas fa-edit",
+          description: `
+            <p>Create a recognition program that's uniquely yours. Whether you want to recognize innovation, teamwork, customer service excellence, or any other behavior that matters to your organization, we can help you design the perfect program.</p>
+            
+            <div class="custom-form-container">
+              <h4>Tell us about your custom recognition idea:</h4>
+              <div class="custom-form-group">
+                <label for="custom-feature-name">Feature Name*</label>
+                <input type="text" id="custom-feature-name" placeholder="e.g., Innovation Awards, Customer Hero Recognition" required>
+              </div>
+              <div class="custom-form-group">
+                <label for="custom-feature-description">Description</label>
+                <textarea id="custom-feature-description" placeholder="Describe what behaviors or achievements you want to recognize, and any specific ideas you have for this program..." rows="4"></textarea>
+              </div>
+              <button type="button" id="add-custom-feature" class="btn custom-add-btn">Add Custom Program</button>
+            </div>
+            
+            <h4>Why Custom Recognition Works</h4>
+            <p>Research shows that <span class="stat-highlight">34% higher participation rates</span> occur when recognition programs align with specific organizational values and goals.</p>
+          `,
+          products: [
+            { name: "Custom Awards", image: "assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg" },
+            { name: "Branded Items", image: "assets/images/BrandMErchandise.png" },
+            { name: "Personalized Gifts", image: "assets/images/Ceramic Mugs.jpg" },
+            { name: "Experience Packages", image: "assets/images/Popular Sling Bag.jpg" }
+          ]
+        }
+      };
+      
+      // Modal functionality
+      const modal = document.getElementById('feature-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalIcon = document.getElementById('modal-icon');
+      const modalDescription = document.getElementById('modal-description');
+      const modalProductsGrid = document.getElementById('modal-products-grid');
+      const modalAddFeature = document.getElementById('modal-add-feature');
+      const modalChat = document.getElementById('modal-chat');
+      const modalClose = document.querySelector('.feature-modal-close');
+      
+      // Learn more button functionality
+      const learnMoreBtns = document.querySelectorAll('.learn-more-btn');
+      learnMoreBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const featureKey = this.dataset.feature;
+          const feature = featureData[featureKey];
+          
+          if (feature) {
+            // Populate modal content
+            modalTitle.textContent = feature.title;
+            modalIcon.className = feature.icon;
+            modalDescription.innerHTML = feature.description;
+            
+            // Populate products with feature-specific titles
+            const productTitles = {
+              'welcome': 'Package It Like a Gift',
+              'service': 'Years of Service Ideas',
+              'performance': 'Reward Excellence',
+              'wellness': 'Nurture Their Well-Being',
+              'spot': 'Make It Memorable',
+              'peer': 'Share the Appreciation',
+              'points': 'Choose Your Rewards',
+              'awards': 'Honor Their Excellence',
+              'incentives': 'Motivate Success',
+              'attendance': 'Recognize Reliability',
+              'safety': 'Celebrate Safety',
+              'community': 'Honor Service',
+              'patient-care': 'Recognize Patient Care',
+              'custom': 'Create Something Unique'
+            };
+            
+            // Update the products section title
+            const modalProductsTitle = document.querySelector('.modal-products h3');
+            if (modalProductsTitle && productTitles[featureKey]) {
+              modalProductsTitle.textContent = productTitles[featureKey];
+            }
+            
+            modalProductsGrid.innerHTML = '';
+            
+            // Remove any existing customize and CTA sections
+            const existingCustomizeSection = document.querySelector('.modal-customize-section');
+            if (existingCustomizeSection) {
+              existingCustomizeSection.remove();
+            }
+            const existingCtaSection = document.querySelector('.modal-cta-section');
+            if (existingCtaSection) {
+              existingCtaSection.remove();
+            }
+            
+            feature.products.forEach(product => {
+              const productCard = document.createElement('div');
+              productCard.className = 'modal-product-card';
+              productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" onerror="this.src='assets/images/product-placeholder.png'">
+                <h5>${product.name}</h5>
+              `;
+              modalProductsGrid.appendChild(productCard);
+            });
+
+            // Add CTA section for Years of Service
+            if (featureKey === 'service') {
+              const ctaSection = document.createElement('div');
+              ctaSection.className = 'modal-cta-section';
+              ctaSection.innerHTML = `
+                <div style="margin-top: 2rem; padding: 20px; background-color: #f8f9fa; border: 2px solid var(--primary-color); border-radius: 8px; text-align: center;">
+                  <h4 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 1.6rem;">How Are You Going To Present It?</h4>
+                  <p style="margin: 0; font-weight: bold; font-size: 1.1em; color: #333;">In Person • Newsletter • Monthly Department Meeting • Deliver</p>
+                  <p style="margin: 0.5rem 0 0 0; font-style: italic; color: #666;">Make every milestone moment memorable with the perfect presentation approach.</p>
+                </div>
+              `;
+              
+              // Insert after the main products section
+              const modalProductsSection = document.querySelector('.modal-products');
+              modalProductsSection.parentNode.insertBefore(ctaSection, modalProductsSection.nextSibling);
+            }
+
+            // Add customize section for welcome kits and years of service
+            if ((featureKey === 'welcome' || featureKey === 'service') && feature.customizeProducts) {
+              const customizeSection = document.createElement('div');
+              customizeSection.className = 'modal-customize-section';
+              const customizeTitle = featureKey === 'service' ? 'Customize it: Personal and Public' : 'Customize to Fit Your Audience and Your Brand';
+              customizeSection.innerHTML = `
+                <h3>${customizeTitle}</h3>
+                <div class="modal-customize-grid">
+                  ${feature.customizeProducts.map(product => `
+                    <div class="modal-product-card">
+                      <img src="${product.image}" alt="${product.name}" onerror="this.src='assets/images/product-placeholder.png'">
+                      <h5>${product.name}</h5>
+                    </div>
+                  `).join('')}
+                </div>
+              `;
+              
+              // Insert after the main products section
+              const modalProductsSection = document.querySelector('.modal-products');
+              modalProductsSection.parentNode.insertBefore(customizeSection, modalProductsSection.nextSibling);
+            }
+            
+            // Set up modal actions
+            const featureMap = {
+              'welcome': 'Welcome Kits',
+              'service': 'Years of Service',
+              'performance': 'Performance Bonuses',
+              'wellness': 'Wellness Programs',
+              'spot': 'Spot Recognition',
+              'peer': 'Peer-to-Peer',
+              'points': 'Point-Based Rewards',
+              'awards': 'General Awards',
+              'incentives': 'Incentive Programs',
+              'attendance': 'Attendance Recognition',
+              'safety': 'Safety Recognition',
+              'community': 'Community Impact',
+              'patient-care': 'Patient Care Recognition',
+              'volunteer': 'Volunteer Recognition',
+              'custom': 'Custom Recognition'
+            };
+            
+            const featureName = featureMap[featureKey];
+            console.log('Feature mapping:', featureKey, '->', featureName); // Debug log
+            
+            if (!featureName) {
+              console.error('Feature name not found for key:', featureKey);
+              return;
+            }
+            
+            modalAddFeature.dataset.currentFeature = featureName;
+            
+            // Update modal button state using the dedicated function
+            updateModalButtonState();
+            
+            modalAddFeature.onclick = () => {
+              console.log('Modal add clicked:', featureKey, featureName); // Debug log
+              
+              // Special handling for custom recognition feature
+              if (featureKey === 'custom') {
+                const customName = prompt('Enter your custom recognition program name:');
+                if (customName && customName.trim()) {
+                  const customFeatureName = `Custom: ${customName.trim()}`;
+                  if (!selectedFeatures.has(customFeatureName)) {
+                    selectedFeatures.add(customFeatureName);
+                    updateStickyBuilder();
+                  } else {
+                    alert('This custom feature has already been added to your program.');
+                  }
+                } else {
+                  alert('Please enter a name for your custom recognition program.');
+                }
+              } else if (featureName && !selectedFeatures.has(featureName)) {
+                selectedFeatures.add(featureName);
+                updateStickyBuilder();
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+              } else {
+                console.error('Feature name is undefined or already exists:', featureName, selectedFeatures.has(featureName));
+              }
+            };
+            
+            modalChat.onclick = () => {
+              window.location.href = 'contact.html?inquiry=chat';
+            };
+            
+            // Show modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Ensure modal button state is updated after modal is shown
+            setTimeout(() => {
+              updateModalButtonState();
+            }, 10);
+            
+            // Add custom form functionality if this is the custom feature
+            if (featureKey === 'custom') {
+              setTimeout(() => {
+                const addCustomFeatureBtn = document.getElementById('add-custom-feature');
+                if (addCustomFeatureBtn) {
+                  addCustomFeatureBtn.addEventListener('click', function() {
+                    const nameInput = document.getElementById('custom-feature-name');
+                    const descInput = document.getElementById('custom-feature-description');
+                    
+                    if (nameInput && nameInput.value.trim()) {
+                      const customName = nameInput.value.trim();
+                      const customDescription = descInput ? descInput.value.trim() : '';
+                      const customFeatureName = `Custom: ${customName}`;
+                      
+                      if (!selectedFeatures.has(customFeatureName)) {
+                        // Store the custom description in localStorage for future reference
+                        if (customDescription) {
+                          localStorage.setItem(`custom_desc_${customName}`, customDescription);
+                        }
+                        
+                        selectedFeatures.add(customFeatureName);
+                        updateStickyBuilder();
+                        
+                        // Close modal
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        
+                        alert(`"${customName}" has been added to your program!`);
+                      } else {
+                        alert('This custom feature has already been added to your program.');
+                      }
+                    } else {
+                      alert('Please enter a name for your custom recognition program.');
+                    }
+                  });
+                }
+              }, 100);
+            }
+          }
+        });
+      });
+      
+      // Close modal functionality
+      modalClose.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+      
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Add event listeners
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('resize', handleResize);
+      
+      // Custom program functionality
+      const addCustomProgramBtn = document.getElementById('add-custom-program');
+      const customProgramName = document.getElementById('custom-program-name');
+      const customProgramDescription = document.getElementById('custom-program-description');
+      
+      if (addCustomProgramBtn && customProgramName) {
+        addCustomProgramBtn.addEventListener('click', function() {
+          const programName = customProgramName.value.trim();
+          const programDescription = customProgramDescription ? customProgramDescription.value.trim() : '';
+          
+          if (!programName) {
+            alert('Please enter a program name.');
+            customProgramName.focus();
+            return;
+          }
+          
+          const customFeatureName = `Custom: ${programName}`;
+          
+          if (selectedFeatures.has(customFeatureName)) {
+            alert('This custom program has already been added.');
+            return;
+          }
+          
+          // Store the custom description in localStorage for future reference
+          if (programDescription) {
+            localStorage.setItem(`custom_desc_${programName}`, programDescription);
+          }
+          
+          // Add to selected features
+          selectedFeatures.add(customFeatureName);
+          updateStickyBuilder();
+          
+          // Clear the form
+          customProgramName.value = '';
+          if (customProgramDescription) {
+            customProgramDescription.value = '';
+          }
+          
+          // Visual feedback
+          addCustomProgramBtn.textContent = '✓ Added!';
+          addCustomProgramBtn.disabled = true;
+          setTimeout(() => {
+            addCustomProgramBtn.innerHTML = '<i class="fas fa-plus"></i> Add Custom Program';
+            addCustomProgramBtn.disabled = false;
+          }, 2000);
+        });
+        
+        // Enable/disable button based on input
+        customProgramName.addEventListener('input', function() {
+          addCustomProgramBtn.disabled = !this.value.trim();
+        });
+      }
+
+      // Initialize
+      // Load saved features first
+      const hasLoadedFeatures = loadSelectedFeatures();
+      updateStickyBuilder();
+      generateCaptcha();
+      
+      // Set initial position after a short delay to ensure layout is complete
+      setTimeout(positionStickyBuilder, 100);
+      
+      // Show a message if features were loaded
+      if (hasLoadedFeatures && selectedFeatures.size > 0) {
+        console.log(`Loaded ${selectedFeatures.size} previously selected features`);
+      }
+    });
+  </script>
+</body>
+</html> 
