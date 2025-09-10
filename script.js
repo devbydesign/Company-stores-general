@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('=== Company Store Script Loading ===');
+  console.log('DOM loaded, starting script execution...');
 
   // ==============================================
   // --- GLOBAL & NAVIGATION ---
@@ -514,26 +516,51 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- PROGRAM BUILDER 1 (build-program.html) ---
   // ==============================================
 
-  const isProgramBuilderPage = document.getElementById('module-palette');
+  console.log('=== CHECKING FOR PAGE ELEMENTS ===');
+  
+  // Check for company store page or program builder page
+  const storeCanvasElement = document.getElementById('store-canvas');
+  const moduleElement = document.getElementById('module-palette');
+  const isProgramBuilderPage = moduleElement || storeCanvasElement;
+  const isCompanyStorePage = storeCanvasElement;
+  
+  console.log('Element detection results:', {
+    storeCanvasElement: storeCanvasElement,
+    storeCanvasExists: !!storeCanvasElement,
+    moduleElement: moduleElement,
+    moduleExists: !!moduleElement,
+    isProgramBuilderPage: !!isProgramBuilderPage,
+    isCompanyStorePage: !!isCompanyStorePage
+  });
+  
+  console.log('Current page URL:', window.location.href);
+  console.log('Document title:', document.title);
 
   if (isProgramBuilderPage) {
+    // Elements for recognition-general (original functionality)
     const modulePalette = document.getElementById('module-palette');
     const canvasDropzone = document.getElementById('canvas-dropzone');
+    
+    // Elements for company stores (new functionality)  
+    const storeCanvas = document.getElementById('store-canvas');
+    const productCategories = document.querySelector('.product-categories');
+    
     const strengthBar = document.getElementById('strength-bar');
     const strengthText = document.getElementById('strength-text');
     const planDetailsForm = document.getElementById('plan-details-form');
     const planSummarySection = document.getElementById('plan-summary-section');
-    const summaryModulesList = planSummarySection.querySelector('#summary-modules-list');
-    const summaryContactInfo = planSummarySection.querySelector('#summary-contact-info');
+    const summaryModulesList = planSummarySection?.querySelector('#summary-modules-list');
+    const summaryContactInfo = planSummarySection?.querySelector('#summary-contact-info');
     const saveButton = document.getElementById('save-program-btn');
     const startOverButton = document.getElementById('start-over-btn');
     const captchaQuestionSpan = document.getElementById('captcha-question');
     const captchaNum1Input = document.getElementById('captcha-num1');
     const captchaNum2Input = document.getElementById('captcha-num2');
     const captchaInput = document.getElementById('captcha');
-    const dropzonePlaceholder = canvasDropzone.querySelector('.dropzone-placeholder');
+    const dropzonePlaceholder = canvasDropzone?.querySelector('.dropzone-placeholder');
 
     let draggedModule = null;
+    let draggedProduct = null; // For company store products
     let touchOffset = { x: 0, y: 0 };
     let isDragging = false;
     let touchDragElement = null;
@@ -1248,7 +1275,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (saveButton) {
+        console.log('Setting up save button event listener...');
         saveButton.addEventListener('click', () => {
+           console.log('Save button clicked!');
            const contactSection = document.getElementById('contact-delivery-section');
            if (contactSection) {
                populateFormFeatures();
@@ -1263,6 +1292,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
            }
         });
+    } else {
+        console.log('Save button not found!');
     }
     
     // Populate selected features in form
@@ -1270,7 +1301,59 @@ document.addEventListener('DOMContentLoaded', function() {
         const formFeaturesList = document.getElementById('form-features-list');
         if (!formFeaturesList) return;
 
-        // Feature descriptions for the form display
+        formFeaturesList.innerHTML = '';
+        
+        // Handle company store products
+        if (isCompanyStorePage) {
+          const selectedProducts = document.querySelectorAll('.product-tile.selected');
+          const customProduct = document.getElementById('custom-product')?.value || '';
+          
+          if (selectedProducts.length === 0 && !customProduct) {
+            formFeaturesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">No products selected yet</p>';
+            return;
+          }
+
+          // Add selected products
+          selectedProducts.forEach(tile => {
+            const productName = tile.dataset.product;
+            const productCategory = tile.dataset.category;
+            const productImage = tile.dataset.image;
+            
+            const featureItem = document.createElement('div');
+            featureItem.className = 'form-feature-item';
+            
+            featureItem.innerHTML = `
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <img src="${productImage}" alt="${productName}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
+                <div>
+                  <h4 style="margin: 0;">${productName}</h4>
+                  <p style="margin: 0; color: #666; font-size: 0.9rem;">${productCategory}</p>
+                </div>
+              </div>
+            `;
+            
+            formFeaturesList.appendChild(featureItem);
+          });
+
+          // Add custom product request if provided
+          if (customProduct) {
+            const customItem = document.createElement('div');
+            customItem.className = 'form-feature-item';
+            
+            customItem.innerHTML = `
+              <div>
+                <h4 style="margin: 0;">Custom Product Request</h4>
+                <p style="margin: 0.5rem 0 0 0; color: #666;">${customProduct}</p>
+              </div>
+            `;
+            
+            formFeaturesList.appendChild(customItem);
+          }
+          
+          return;
+        }
+
+        // Handle recognition program features (original functionality)
         const featureDescriptions = {
           'Welcome Kits': 'A vital first step to improving your employee well-being and efficiency',
           'Years of Service Recognition': 'Building loyalty and recognition that strengthens your organizational foundation',
@@ -1286,10 +1369,8 @@ document.addEventListener('DOMContentLoaded', function() {
           'Community Impact': 'Building purpose-driven culture through recognition of volunteer and community engagement',
           'Volunteer Recognition': 'Celebrating employee volunteerism to enhance engagement and organizational purpose'
         };
-
-        formFeaturesList.innerHTML = '';
         
-        const canvasItems = canvasDropzone.querySelectorAll('.canvas-item');
+        const canvasItems = canvasDropzone?.querySelectorAll('.canvas-item') || [];
         if (canvasItems.length === 0) {
           formFeaturesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">No features selected yet</p>';
           return;
@@ -2439,6 +2520,413 @@ document.addEventListener('DOMContentLoaded', function() {
          });
        }
      }
+
+    // COMPANY STORE SPECIFIC FUNCTIONALITY
+    console.log('=== COMPANY STORE SETUP START ===');
+    console.log('Is company store page:', isCompanyStorePage);
+    
+    if (isCompanyStorePage) {
+      console.log('✅ Setting up company store functionality...');
+      console.log('Store canvas element:', storeCanvasElement);
+      // Company store drag and drop functionality
+      function initializeCompanyStoreDragAndDrop() {
+        console.log('Initializing company store drag and drop...');
+        
+        setupProductTileDragAndDrop();
+        setupStoreCanvasDropZone();
+      }
+
+      function setupProductTileDragAndDrop() {
+        // Set up drag and drop for product tiles
+        const productTiles = document.querySelectorAll('.product-tile[draggable="true"]');
+        console.log('Found product tiles:', productTiles.length);
+        console.log('First few product tiles:', Array.from(productTiles).slice(0, 3).map(tile => ({
+          product: tile.dataset.product,
+          visible: tile.offsetParent !== null,
+          draggable: tile.draggable
+        })));
+        
+        productTiles.forEach(tile => {
+          // Remove existing listeners to prevent duplicates
+          tile.removeEventListener('dragstart', handleProductDragStart);
+          tile.removeEventListener('dragend', handleProductDragEnd);
+          
+          // Add event listeners
+          tile.addEventListener('dragstart', handleProductDragStart);
+          tile.addEventListener('dragend', handleProductDragEnd);
+          
+          // Remove existing click listener to prevent duplicates
+          const existingClickHandler = tile._clickHandler;
+          if (existingClickHandler) {
+            tile.removeEventListener('click', existingClickHandler);
+          }
+          
+          // Create new click handler and store reference
+          const clickHandler = function(e) {
+            try {
+              console.log('🔥 Product tile clicked:', this.dataset.product);
+              console.log('Click position:', { x: e.clientX, y: e.clientY });
+              console.log('Tile data:', { 
+                product: this.dataset.product,
+                category: this.dataset.category,
+                image: this.dataset.image,
+                selected: this.classList.contains('selected')
+              });
+              
+              // Prevent event if clicking on checkmark area
+              const rect = this.getBoundingClientRect();
+              const clickX = e.clientX - rect.left;
+              const clickY = e.clientY - rect.top;
+              
+              console.log('Click within tile:', { clickX, clickY, width: rect.width, height: rect.height });
+              
+              // Check if click is in checkmark area (top-right corner)
+              if (this.classList.contains('selected') && clickX >= rect.width - 32 && clickY <= 32) {
+                console.log('👆 Clicked checkmark area - removing product');
+                removeProductFromCanvas(this.dataset.product);
+                e.stopPropagation();
+                return;
+              }
+              
+              // Toggle product selection
+              if (this.classList.contains('selected')) {
+                console.log('🗑️ Product is selected - removing from canvas');
+                removeProductFromCanvas(this.dataset.product);
+              } else {
+                console.log('➕ Product not selected - adding to canvas');
+                addProductToCanvas({
+                  product: this.dataset.product,
+                  category: this.dataset.category,
+                  image: this.dataset.image
+                });
+              }
+            } catch (error) {
+              console.error('❌ Error in click handler:', error);
+            }
+          };
+          
+          tile._clickHandler = clickHandler;
+          tile.addEventListener('click', clickHandler);
+        });
+      }
+
+      function setupStoreCanvasDropZone() {
+        // Set up store canvas drop zone
+        const storeCanvasElement = document.getElementById('store-canvas');
+        console.log('Store canvas found:', !!storeCanvasElement);
+        
+        if (storeCanvasElement) {
+          // Remove existing listeners to prevent duplicates
+          storeCanvasElement.removeEventListener('dragover', handleStoreDragOver);
+          storeCanvasElement.removeEventListener('dragleave', handleStoreDragLeave);
+          storeCanvasElement.removeEventListener('drop', handleStoreDrop);
+          
+          // Add event listeners
+          storeCanvasElement.addEventListener('dragover', handleStoreDragOver);
+          storeCanvasElement.addEventListener('dragleave', handleStoreDragLeave);
+          storeCanvasElement.addEventListener('drop', handleStoreDrop);
+        }
+      }
+
+      function handleProductDragStart(e) {
+        console.log('🚀 Drag started for product:', e.target.dataset.product);
+        
+        draggedProduct = {
+          product: e.target.dataset.product,
+          category: e.target.dataset.category,
+          image: e.target.dataset.image
+        };
+        
+        console.log('Dragged product data:', draggedProduct);
+        
+        e.target.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.setData('text/html', e.target.outerHTML);
+      }
+
+      function handleProductDragEnd(e) {
+        e.target.classList.remove('dragging');
+        draggedProduct = null;
+      }
+
+      function handleStoreDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          storeCanvasElement.classList.add('drag-over');
+        }
+      }
+
+      function handleStoreDragLeave(e) {
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          storeCanvasElement.classList.remove('drag-over');
+        }
+      }
+
+      function handleStoreDrop(e) {
+        console.log('📦 Drop event triggered on store canvas');
+        e.preventDefault();
+        
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          storeCanvasElement.classList.remove('drag-over');
+        }
+        
+        console.log('Dragged product on drop:', draggedProduct);
+        
+        if (draggedProduct) {
+          console.log('✅ Adding dragged product to canvas');
+          addProductToCanvas(draggedProduct);
+        } else {
+          console.log('❌ No dragged product data available');
+        }
+      }
+
+      function addProductToCanvas(productData) {
+        console.log('Adding product to canvas:', productData);
+        
+        // Mark original tile as selected
+        const originalTile = document.querySelector(`[data-product="${productData.product}"]`);
+        console.log('Original tile found:', !!originalTile);
+        
+        if (originalTile) {
+          originalTile.classList.add('selected');
+          const checkbox = originalTile.querySelector('input[type="checkbox"]');
+          if (checkbox) {
+            checkbox.checked = true;
+          }
+        }
+
+        // Check if product already exists
+        const existingItem = document.querySelector(`.canvas-store-item[data-product="${productData.product}"]`);
+        if (existingItem) {
+          return; // Already in store
+        }
+
+        // Hide placeholder
+        const placeholder = document.querySelector('.canvas-placeholder');
+        if (placeholder) {
+          placeholder.style.display = 'none';
+        }
+
+        // Create new store item
+        const storeItem = document.createElement('div');
+        storeItem.className = 'canvas-store-item';
+        storeItem.setAttribute('data-product', productData.product);
+        storeItem.innerHTML = `
+          <img src="${productData.image}" alt="${productData.product}">
+          <div class="canvas-store-item-content">
+            <h4>${productData.product}</h4>
+            <p class="canvas-store-item-category">${productData.category}</p>
+          </div>
+          <button class="canvas-store-item-remove" onclick="removeProductFromCanvas('${productData.product}')">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          storeCanvasElement.appendChild(storeItem);
+        }
+      }
+
+      function removeProductFromCanvas(productName) {
+        console.log('Removing product from canvas:', productName);
+        
+        // Remove from canvas
+        const storeItem = document.querySelector(`.canvas-store-item[data-product="${productName}"]`);
+        if (storeItem) {
+          storeItem.remove();
+          console.log('Product removed from canvas');
+        } else {
+          console.log('Store item not found for removal');
+        }
+
+        // Unselect original tile
+        const originalTile = document.querySelector(`[data-product="${productName}"]`);
+        if (originalTile) {
+          originalTile.classList.remove('selected');
+          const checkbox = originalTile.querySelector('input[type="checkbox"]');
+          if (checkbox) {
+            checkbox.checked = false;
+          }
+        }
+
+        // Show placeholder if no items left
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          const items = storeCanvasElement.querySelectorAll('.canvas-store-item');
+          if (items.length === 0) {
+            const placeholder = document.querySelector('.canvas-placeholder');
+            if (placeholder) {
+              placeholder.style.display = 'block';
+            }
+          }
+        }
+      }
+
+      // Make removeProductFromCanvas global for onclick handlers
+      window.removeProductFromCanvas = removeProductFromCanvas;
+
+      // Clear store function
+      function clearCompanyStore() {
+        const storeCanvasElement = document.getElementById('store-canvas');
+        if (storeCanvasElement) {
+          const storeItems = storeCanvasElement.querySelectorAll('.canvas-store-item');
+          storeItems.forEach(item => {
+            const productName = item.dataset.product;
+            removeProductFromCanvas(productName);
+          });
+        }
+
+        // Reset form
+        const form = document.getElementById('plan-details-form');
+        if (form) {
+          form.reset();
+        }
+
+        // Clear custom suggestions
+        const customTextarea = document.getElementById('custom-product');
+        if (customTextarea) {
+          customTextarea.value = '';
+        }
+      }
+
+      // Make functions global for onclick handlers and category expansion
+      window.clearStore = clearCompanyStore;
+      window.reinitializeCompanyStoreDragAndDrop = setupProductTileDragAndDrop;
+
+      // Add company store form submission handler (without replacing the form)
+      function setupCompanyStoreFormSubmission() {
+        const form = document.getElementById("plan-details-form");
+        if (form) {
+          // Add form submission handler for company store
+          form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get selected products (checkboxes that are checked)
+            const selectedProducts = Array.from(document.querySelectorAll('.product-tile input[name="planList"]:checked'));
+            const formattedPlans = `<ul>${selectedProducts.map(input => `<li>${input.value}</li>`).join('')}</ul>`;
+
+            // Get form data
+            const customProduct = document.getElementById('custom-product')?.value || '';
+            const affiliateName = document.getElementsByName('affiliateName')[0]?.value || '';
+            const affiliateEmail = document.getElementsByName('affiliateEmail')[0]?.value || '';
+            const headerImgPath = document.getElementsByName('headerImgPath')[0]?.value || '';
+            const footerImgPath = document.getElementsByName('footerImgPath')[0]?.value || '';
+            const firstName = document.getElementsByName('firstName')[0]?.value || '';
+            const lastName = document.getElementsByName('lastName')[0]?.value || '';
+            const phone = document.getElementsByName('phone')[0]?.value || '';
+            const email = document.getElementsByName('email')[0]?.value || '';
+            const companyName = document.getElementsByName('companyName')[0]?.value || '';
+
+            // Validate required fields
+            if (!firstName || !lastName || !companyName || !email) {
+              alert('Please fill in all required fields.');
+              return;
+            }
+
+            // Validate captcha
+            const captchaAnswer = parseInt(document.getElementById('captcha').value);
+            const captchaNum1 = parseInt(document.getElementById('captcha-num1').value);
+            const captchaNum2 = parseInt(document.getElementById('captcha-num2').value);
+            const correctAnswer = captchaNum1 + captchaNum2;
+            
+            if (captchaAnswer !== correctAnswer) {
+              alert('Security check failed. Please check your math and try again.');
+              return;
+            }
+
+            emailjs.send("service_ag1505e", "template_1cfzg9f", {
+              planList: formattedPlans,
+              customProduct: customProduct,
+              affiliateName: affiliateName,
+              affiliateEmail: affiliateEmail,
+              headerImgPath: headerImgPath,
+              footerImgPath: footerImgPath,
+              firstName: firstName,
+              lastName: lastName,
+              phone: phone,
+              email: email,
+              companyName: companyName,
+            })
+            .then(() => {
+              // Show success and plan summary like recognition-general
+              showCompanyStorePlanSummary(selectedProducts, customProduct, firstName, lastName, companyName, email, phone);
+            }, (error) => {
+              alert("Your submission failed to save: " + JSON.stringify(error));
+            });
+          });
+        }
+      }
+
+      function showCompanyStorePlanSummary(selectedProducts, customProduct, firstName, lastName, companyName, email, phone) {
+        // Hide form section
+        const contactSection = document.getElementById('contact-delivery-section');
+        if (contactSection) {
+          contactSection.style.display = 'none';
+        }
+
+        // Show plan summary section
+        if (planSummarySection) {
+          // Populate summary data
+          if (summaryModulesList) {
+            summaryModulesList.innerHTML = selectedProducts.map(input => 
+              `<li>${input.value}</li>`
+            ).join('');
+            
+            if (customProduct) {
+              summaryModulesList.innerHTML += `<li>Custom Request: ${customProduct}</li>`;
+            }
+          }
+
+          if (summaryContactInfo) {
+            summaryContactInfo.innerHTML = `
+              ${firstName} ${lastName}<br>
+              ${companyName}<br>
+              ${email}<br>
+              ${phone ? phone + '<br>' : ''}
+            `;
+          }
+
+          planSummarySection.style.display = 'block';
+          planSummarySection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Initialize company store functionality
+      initializeCompanyStoreDragAndDrop();
+      setupCompanyStoreFormSubmission();
+      
+      // Expand first category by default so users can see products immediately
+      console.log('⏰ Setting timeout to auto-expand first category...');
+      setTimeout(() => {
+        console.log('🔄 Attempting to auto-expand first category...');
+        const firstCategory = document.querySelector('.category-header');
+        console.log('First category found:', firstCategory);
+        
+        if (firstCategory) {
+          console.log('📂 Clicking first category to expand it');
+          firstCategory.click();
+          
+          // Also manually check for product tiles after expansion
+          setTimeout(() => {
+            const tilesAfterExpansion = document.querySelectorAll('.product-tile[draggable="true"]');
+            console.log('🎯 Product tiles after category expansion:', tilesAfterExpansion.length);
+            
+            // If we have tiles, reinitialize to be safe
+            if (tilesAfterExpansion.length > 0) {
+              console.log('🔧 Reinitializing drag & drop after category expansion');
+              setupProductTileDragAndDrop();
+            }
+          }, 200);
+        } else {
+          console.log('❌ No category header found for auto-expansion');
+        }
+      }, 100);
+    }
 
     loadCanvasState();
     generateCaptcha();
