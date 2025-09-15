@@ -391,7 +391,7 @@
     }
 
     .category-header {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(135deg, var(--primary-color), var(--offset-color));
       color: white;
       padding: 1.5rem 2rem;
       cursor: pointer;
@@ -399,15 +399,16 @@
     }
 
     .category-header:hover {
-      background: linear-gradient(135deg, #1a2f4a, var(--secondary-color));
+      background: linear-gradient(135deg, var(--offset-color2), var(--offset-color2));
     }
 
     .category-header h3 {
+      color: white;
       margin: 0;
       font-size: 1.4rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
     }
 
     .category-header i {
@@ -416,7 +417,8 @@
     }
 
     .category-toggle {
-      font-size: 1.2rem;
+      font-size: 1.8rem;
+      margin-left: auto;
       transition: transform 0.3s ease;
     }
 
@@ -467,7 +469,7 @@
       border-radius: 6px;
       margin-bottom: 1rem;
     }
-
+    
     .product-tile h4 {
       margin: 0;
       font-size: 1.1rem;
@@ -520,7 +522,7 @@
       border-radius: 12px;
       border: 1px solid rgba(58, 12, 163, 0.1);
     }
-
+    
     .custom-suggestions h3 {
       color: var(--primary-color);
       margin-bottom: 1.5rem;
@@ -543,14 +545,14 @@
     .custom-form-group {
       margin-bottom: 1rem;
     }
-
+    
     .custom-form-group label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
       color: var(--primary-color);
     }
-
+    
     .custom-form-group textarea {
       width: 100%;
       padding: 1rem;
@@ -562,13 +564,13 @@
       min-height: 100px;
       font-family: inherit;
     }
-
+    
     .custom-form-group textarea:focus {
       outline: none;
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
     }
-
+    
     /* Add to Plan Button */
     .btn-secondary {
       background-color: var(--secondary-color);
@@ -576,7 +578,7 @@
       border: 2px solid var(--secondary-color);
       transition: all 0.3s ease;
     }
-
+    
     .btn-secondary:hover:not(:disabled) {
       background-color: #0056b3;
       border-color: #0056b3;
@@ -837,7 +839,7 @@
     }
 
     .canvas-store-item-remove {
-      background: #dc3545;
+      background: color-mix(in srgb, var(--primary-color), black 30%);
       color: white;
       border: none;
       border-radius: 50%;
@@ -853,19 +855,22 @@
     }
 
     .canvas-store-item-remove:hover {
-      background: #c82333;
+      background: color-mix(in srgb, var(--primary-color), transparent 30%);
       transform: scale(1.1);
     }
 
     /* Custom Idea Items in Store Canvas */
     .custom-idea-item {
-      border: 2px solid #ff6b35 !important; /* Orange border for custom ideas */
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05)) !important;
+      border: 2px solid var(--primary-color) !important; /* Normal brand color border */
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--primary-color), transparent 90%),
+        color-mix(in srgb, var(--primary-color), transparent 95%)
+      ) !important;
     }
 
     .custom-idea-item .canvas-store-item-category {
-      color: #ff6b35;
-      font-weight: 600;
+      color: var(--primary-color);
+      font-weight: 700; /* Bold for "Custom Product Idea" text */
     }
 
     .store-actions .btn {
@@ -1037,7 +1042,7 @@
 
       .product-categories-column,
       .store-canvas-column {
-        width: 100%;
+      width: 100%;
       }
     }
 
@@ -1046,7 +1051,7 @@
       .canvas-store-item {
         flex-direction: column;
         text-align: center;
-        padding: 0.75rem;
+      padding: 0.75rem;
         margin: 0.5rem;
       }
 
@@ -1083,7 +1088,7 @@
     <!-- MOVED: Hero Section -->
     <section class="hero">
       <div class="container">
-        <h1>Build your Employee Recognition Program</h1>
+        <h1></h1>
         <!-- Removed p and button -->
       </div>
     </section>
@@ -1095,11 +1100,11 @@
         <p class="store-description">Explore our curated collection of recognition products. These are just some ideas to start your plan!</p>
       </div>
 
-      <form id="plan-details-form" class="plan-details-form-1">
-        <input name="affiliateName" type="hidden" value="Rick Badiner">
-        <input name="affiliateEmail" type="hidden" value="Rbadiner@rbbmarketing.com">
-        <input name="headerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-header.png">
-        <input name="footerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-footer.png">
+        <form id="plan-details-form" class="plan-details-form-1"> 
+          <input name="affiliateName" type="hidden" value="Rick Badiner">
+          <input name="affiliateEmail" type="hidden" value="Rbadiner@rbbmarketing.com">
+          <input name="headerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-header.png">
+          <input name="footerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-footer.png">
 
         <div class="store-builder-container">
           <!-- Left Column: Product Categories -->
@@ -1109,112 +1114,112 @@
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('apparel')">
               <h3><i class="fas fa-tshirt"></i> Apparel <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="apparel-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Zip Jacket" data-category="Apparel" data-image="assets/images/Apparel.png">
                   <img src="assets/images/Apparel.png" alt="Zip Jacket">
                   <h4>Zip Jacket</h4>
                   <input type="checkbox" name="planList" value="Zip Jacket" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="T-Shirt" data-category="Apparel" data-image="assets/images/Apparel2.png">
                   <img src="assets/images/Apparel2.png" alt="T-Shirt">
                   <h4>T-Shirt</h4>
                   <input type="checkbox" name="planList" value="T-Shirt" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Pullover" data-category="Apparel" data-image="assets/images/ApparelSweater.png">
                   <img src="assets/images/ApparelSweater.png" alt="Pullover">
                   <h4>Pullover</h4>
                   <input type="checkbox" name="planList" value="Pullover" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Triblend T-Shirt" data-category="Apparel" data-image="assets/images/triblend-tshirts.jpg">
                   <img src="assets/images/triblend-tshirts.jpg" alt="Triblend T-Shirt">
                   <h4>Triblend T-Shirt</h4>
                   <input type="checkbox" name="planList" value="Triblend T-Shirt" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Bags & Totes Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('bags')">
               <h3><i class="fas fa-shopping-bag"></i> Bags & Totes <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="bags-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Laptop Bag" data-category="Bags & Totes" data-image="assets/images/backpack1.jpg">
                   <img src="assets/images/backpack1.jpg" alt="Laptop Bag">
                   <h4>Laptop Bag</h4>
                   <input type="checkbox" name="planList" value="Laptop Bag" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Backpack" data-category="Bags & Totes" data-image="assets/images/SlingBackpacks.png">
                   <img src="assets/images/SlingBackpacks.png" alt="Backpack">
                   <h4>Backpack</h4>
                   <input type="checkbox" name="planList" value="Backpack" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Tote" data-category="Bags & Totes" data-image="assets/images/tote1.jpg">
                   <img src="assets/images/tote1.jpg" alt="Tote">
                   <h4>Tote</h4>
                   <input type="checkbox" name="planList" value="Tote" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Travel Bag" data-category="Bags & Totes" data-image="assets/images/travelbag1.jpg">
                   <img src="assets/images/travelbag1.jpg" alt="Travel Bag">
                   <h4>Travel Bag</h4>
                   <input type="checkbox" name="planList" value="Travel Bag" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Drinkware Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('drinkware')">
               <h3><i class="fas fa-coffee"></i> Drinkware <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="drinkware-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Water Bottle" data-category="Drinkware" data-image="assets/images/waterbottle1.png">
                   <img src="assets/images/waterbottle1.png" alt="Water Bottle">
                   <h4>Water Bottle</h4>
                   <input type="checkbox" name="planList" value="Water Bottle" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Tumbler" data-category="Drinkware" data-image="assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg">
                   <img src="assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg" alt="Tumbler">
                   <h4>Tumbler</h4>
                   <input type="checkbox" name="planList" value="Tumbler" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Mug" data-category="Drinkware" data-image="assets/images/Ceramic Mugs.jpg">
                   <img src="assets/images/Ceramic Mugs.jpg" alt="Mug">
                   <h4>Mug</h4>
                   <input type="checkbox" name="planList" value="Mug" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Insulated Tall Mug" data-category="Drinkware" data-image="assets/images/copper-mug.jpg">
                   <img src="assets/images/copper-mug.jpg" alt="Insulated Tall Mug">
                   <h4>Insulated Tall Mug</h4>
                   <input type="checkbox" name="planList" value="Insulated Tall Mug" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Office Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('office')">
               <h3><i class="fas fa-briefcase"></i> Office <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="office-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Note Cards" data-category="Office" data-image="assets/images/ThankyouNotes.png">
                   <img src="assets/images/ThankyouNotes.png" alt="Note Cards">
                   <h4>Note Cards</h4>
                   <input type="checkbox" name="planList" value="Note Cards" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Pens" data-category="Office" data-image="assets/images/Pens.png">
                   <img src="assets/images/Pens.png" alt="Pens">
                   <h4>Pens</h4>
                   <input type="checkbox" name="planList" value="Pens" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Sticky Notes" data-category="Office" data-image="assets/images/StickyNotes.png">
                   <img src="assets/images/StickyNotes.png" alt="Sticky Notes">
                   <h4>Sticky Notes</h4>
@@ -1225,15 +1230,15 @@
                   <h4>Notebooks</h4>
                   <input type="checkbox" name="planList" value="Notebooks" class="hidden">
                 </div>
-              </div>
             </div>
           </div>
+        </div>
 
           <!-- Outdoor Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('outdoor')">
               <h3><i class="fas fa-campground"></i> Outdoor <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+          </div>
             <div id="outdoor-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Drink Cooler" data-category="Outdoor" data-image="assets/images/LunchCooler.png">
@@ -1257,14 +1262,14 @@
                   <input type="checkbox" name="planList" value="Adventure Sling" class="hidden">
                 </div>
               </div>
-            </div>
-          </div>
+        </div>
+      </div>
 
           <!-- Tech Items Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('tech')">
               <h3><i class="fas fa-mobile-alt"></i> Tech Items <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+        </div>
             <div id="tech-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Charger" data-category="Tech Items" data-image="assets/images/TechItems.png">
@@ -1289,7 +1294,7 @@
                 </div>
               </div>
             </div>
-          </div>
+      </div>
 
           <!-- Simple Amenities Category -->
           <div class="product-category">
@@ -1320,8 +1325,8 @@
                 </div>
               </div>
             </div>
-          </div>
-
+      </div>
+      
           <!-- Awards Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('awards')">
@@ -1386,7 +1391,7 @@
             
             <!-- Action Buttons -->
             <div class="store-actions">
-              <button id="save-program-btn" class="btn" onclick="saveCompanyStorePlan()">Save My Company Store Plan</button>
+              <button id="save-program-btn" class="btn" onclick="saveCompanyStorePlan()">Save My Company Store</button>
               <button id="start-over-btn" class="btn btn-outline" onclick="clearStore()">Start Over</button>
             </div>
           </div>
@@ -1649,7 +1654,7 @@ function addProductToStore(productData) {
     <div class="canvas-store-item-content">
       <h4>${productData.product}</h4>
       <p class="canvas-store-item-category">${productData.category}</p>
-    </div>
+      </div>
     <button class="canvas-store-item-remove" onclick="removeProductFromStore('${productData.product}')">
       <i class="fas fa-times"></i>
     </button>
@@ -1964,7 +1969,7 @@ function addCustomIdeaToStore(productData) {
     <div class="canvas-store-item-content">
       <h4>${productData.product}</h4>
       <p class="canvas-store-item-category">${productData.category}</p>
-    </div>
+        </div>
     <button class="canvas-store-item-remove" onclick="removeCustomIdeaFromStore('${productData.product}')">
       <i class="fas fa-times"></i>
     </button>
@@ -2034,7 +2039,7 @@ function updateCustomIdeasList() {
       <button class="custom-idea-remove" onclick="removeCustomIdea(${index})" title="Remove this idea">
         <i class="fas fa-times"></i>
       </button>
-    </div>
+          </div>
   `).join('');
 }
 
@@ -2418,9 +2423,9 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeDragAndDrop();
   };
 
-  const form = document.getElementById("plan-details-form");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+      const form = document.getElementById("plan-details-form");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
 
     // Validate captcha first
     if (!validateCaptcha()) {
@@ -2441,30 +2446,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Combine all product information
     const allProducts = formattedPlans + customIdeasFormatted;
-    affiliateName = document.getElementsByName('affiliateName')[0]?.value || '';
-    affiliateEmail = document.getElementsByName('affiliateEmail')[0]?.value || '';
-    headerImgPath = document.getElementsByName('headerImgPath')[0]?.value || '';
-    footerImgPath = document.getElementsByName('footerImgPath')[0]?.value || '';
-    firstName = document.getElementsByName('firstName')[0]?.value || '';
-    lastName = document.getElementsByName('lastName')[0]?.value || '';
-    phone = document.getElementsByName('phone')[0]?.value || '';
-    email = document.getElementsByName('email')[0]?.value || '';
-    companyName = document.getElementsByName('companyName')[0]?.value || '';
+        affiliateName = document.getElementsByName('affiliateName')[0]?.value || '';
+        affiliateEmail = document.getElementsByName('affiliateEmail')[0]?.value || '';
+        headerImgPath = document.getElementsByName('headerImgPath')[0]?.value || '';
+        footerImgPath = document.getElementsByName('footerImgPath')[0]?.value || '';
+        firstName = document.getElementsByName('firstName')[0]?.value || '';
+        lastName = document.getElementsByName('lastName')[0]?.value || '';
+        phone = document.getElementsByName('phone')[0]?.value || '';
+        email = document.getElementsByName('email')[0]?.value || '';
+        companyName = document.getElementsByName('companyName')[0]?.value || '';
 
-    emailjs.send("service_ag1505e", "template_1cfzg9f", {
+        emailjs.send("service_ag1505e", "template_1cfzg9f", {
       planList: allProducts,
-      affiliateName: affiliateName,
-      affiliateEmail: affiliateEmail,
-      headerImgPath: headerImgPath,
-      footerImgPath: footerImgPath,
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone,
-      email: email,
-      companyName: companyName,
-    })
-      .then(() => {
-        alert("Your submission was successful!");
+          affiliateName: affiliateName,
+          affiliateEmail: affiliateEmail,
+          headerImgPath: headerImgPath,
+          footerImgPath: footerImgPath,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          companyName: companyName,
+        })
+          .then(() => {
+            alert("Your submission was successful!");
 
         // Populate and reveal the plan summary
         populatePlanSummary({
@@ -2481,14 +2486,14 @@ document.addEventListener("DOMContentLoaded", function () {
         revealPlanSummary();
 
         // Reset the form
-        form.reset();
+            form.reset();
 
         // Generate new captcha after successful submission
         setTimeout(() => generateCaptcha(), 1000);
-      }, (error) => {
-        alert("Your submission failed to save: " + JSON.stringify(error));
+          }, (error) => {
+            alert("Your submission failed to save: " + JSON.stringify(error));
+          });
       });
-  });
 });
 </script>
 <script src="footer.js" defer></script>
