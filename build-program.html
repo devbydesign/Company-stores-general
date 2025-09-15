@@ -638,7 +638,7 @@
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      background: #dc3545;
+      background: color-mix(in srgb, var(--primary-color), black 30%);
       color: white;
       border: none;
       border-radius: 50%;
@@ -653,7 +653,7 @@
     }
 
     .custom-idea-remove:hover {
-      background: #c82333;
+      background: color-mix(in srgb, var(--primary-color), transparent 30%);
       transform: scale(1.1);
     }
 
@@ -742,7 +742,7 @@
     .company-store-canvas h3 {
       color: var(--primary-color);
       margin-bottom: 0.5rem;
-      font-size: 1.4rem;
+      font-size: 1.65rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -870,6 +870,134 @@
     .canvas-store-item-remove:hover {
       background: color-mix(in srgb, var(--primary-color), transparent 30%);
       transform: scale(1.1);
+    }
+
+    /* Button Container for Custom Items */
+    .canvas-store-item-buttons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    /* Edit Button for Custom Items */
+    .canvas-store-item-edit {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+      margin-right: 5px;
+    }
+
+    .canvas-store-item-edit:hover {
+      background: color-mix(in srgb, var(--primary-color), black 20%);
+      transform: scale(1.1);
+    }
+
+    /* Edit Modal Styles */
+    .edit-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .edit-modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .edit-modal {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .edit-modal-overlay.show .edit-modal {
+      transform: scale(1);
+    }
+
+    .edit-modal h3 {
+      margin: 0 0 1.5rem 0;
+      color: var(--primary-color);
+      font-size: 1.4rem;
+    }
+
+    .edit-modal textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    .edit-modal textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
+    }
+
+    .edit-modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .edit-modal-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .edit-modal-btn.save {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .edit-modal-btn.save:hover {
+      background: color-mix(in srgb, var(--primary-color), black 20%);
+      transform: translateY(-1px);
+    }
+
+    .edit-modal-btn.cancel {
+      background: #6c757d;
+      color: white;
+    }
+
+    .edit-modal-btn.cancel:hover {
+      background: #5a6268;
+      transform: translateY(-1px);
     }
 
     /* Custom Idea Items in Store Canvas */
@@ -1337,7 +1465,7 @@
     <section class="product-store-section">
       <div class="store-header">
         <h2>Build Your Company Store</h2>
-        <p class="store-description">Explore our curated collection of recognition products. These are just some ideas to start your plan!</p>
+        <p class="store-description">Explore our curated collection of store products. Select what you are interested in, and we'll help you expand it out from there!</p>
       </div>
 
         <form id="plan-details-form" class="plan-details-form-1"> 
@@ -1674,14 +1802,7 @@
               </div>
           </div>
           
-          <!-- Selected Features Display -->
-          <div id="form-selected-features" class="form-selected-features">
-            <h3>Your Customized Selection</h3>
-            <div id="form-features-list" class="form-features-list">
-              <!-- Features will be populated by JavaScript -->
-            </div>
-
-          </div>
+          
           
           <!-- Consultation Note -->
           <div class="consultation-note">
@@ -1709,8 +1830,7 @@
                      <h3>What's Next:</h3>
                      <ul>
                          <li>We've emailed your summary</li>
-                         <li>Expect tips over the next week</li>
-                         <li>We'll reach out shortly to talk about your personalized plan!</li>
+                         <li>We'll reach out shortly to talk about setting up your company store!</li>
                      </ul>
                 </div>
                 
@@ -2210,9 +2330,14 @@ function addCustomIdeaToStore(productData) {
       <h4>${productData.product}</h4>
       <p class="canvas-store-item-category">${productData.category}</p>
         </div>
-    <button class="canvas-store-item-remove" onclick="removeCustomIdeaFromStore('${productData.product}')">
-      <i class="fas fa-times"></i>
-    </button>
+    <div class="canvas-store-item-buttons">
+      <button class="canvas-store-item-edit" onclick="editCustomIdea('${productData.product}')" title="Edit custom idea">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button class="canvas-store-item-remove" onclick="removeCustomIdeaFromStore('${productData.product}')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   `;
 
   // Add to canvas
@@ -2658,6 +2783,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Create captcha selector
   setTimeout(createCaptchaSelector, 100);
 
+  // Expand the first category (Apparel) by default
+  setTimeout(function() {
+    toggleCategory('apparel');
+  }, 200);
+
   // Also initialize after any category expansion
   window.reinitializeCompanyStoreDragAndDrop = function() {
     initializeDragAndDrop();
@@ -2734,6 +2864,125 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Your submission failed to save: " + JSON.stringify(error));
           });
       });
+});
+
+// Custom Idea Edit Functionality
+let currentEditingItem = null;
+
+function editCustomIdea(itemText) {
+  currentEditingItem = itemText;
+
+  // Create modal if it doesn't exist
+  let modal = document.getElementById('edit-modal-overlay');
+  if (!modal) {
+    const modalHTML = `
+      <div id="edit-modal-overlay" class="edit-modal-overlay">
+        <div class="edit-modal">
+          <h3>Edit Custom Product Idea</h3>
+          <textarea id="edit-item-text" placeholder="Enter your custom product idea...">${itemText}</textarea>
+          <div class="edit-modal-buttons">
+            <button class="edit-modal-btn cancel" onclick="closeEditModal()">Cancel</button>
+            <button class="edit-modal-btn save" onclick="saveEditedItem()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    modal = document.getElementById('edit-modal-overlay');
+  } else {
+    // Update textarea with current text
+    document.getElementById('edit-item-text').value = itemText;
+  }
+
+  // Show modal
+  modal.classList.add('show');
+
+  // Focus on textarea
+  setTimeout(() => {
+    document.getElementById('edit-item-text').focus();
+  }, 100);
+}
+
+function closeEditModal() {
+  const modal = document.getElementById('edit-modal-overlay');
+  if (modal) {
+    modal.classList.remove('show');
+  }
+  currentEditingItem = null;
+}
+
+function saveEditedItem() {
+  const newText = document.getElementById('edit-item-text').value.trim();
+
+  if (!newText) {
+    alert('Please enter some text for your custom product idea.');
+    return;
+  }
+
+  if (!currentEditingItem) {
+    closeEditModal();
+    return;
+  }
+
+  // Update the item in the custom ideas array
+  const index = customIdeas.findIndex(idea => idea === currentEditingItem);
+  if (index !== -1) {
+    customIdeas[index] = newText;
+    updateCustomIdeasList();
+  }
+
+  // Update the item in the store canvas
+  updateStoreItemText(currentEditingItem, newText);
+
+  // Close modal
+  closeEditModal();
+}
+
+function updateStoreItemText(oldText, newText) {
+  // Find the store item with the old text
+  const storeItems = document.querySelectorAll('.canvas-store-item[data-category="custom-idea"]');
+  storeItems.forEach(item => {
+    if (item.dataset.product === oldText) {
+      // Update the data attribute
+      item.setAttribute('data-product', newText);
+
+      // Update the text content
+      const titleElement = item.querySelector('h4');
+      if (titleElement) {
+        titleElement.textContent = newText;
+      }
+
+      // Update the remove button onclick
+      const removeBtn = item.querySelector('.canvas-store-item-remove');
+      if (removeBtn) {
+        removeBtn.setAttribute('onclick', `removeCustomIdeaFromStore('${newText}')`);
+      }
+
+      // Update the edit button onclick
+      const editBtn = item.querySelector('.canvas-store-item-edit');
+      if (editBtn) {
+        editBtn.setAttribute('onclick', `editCustomIdea('${newText}')`);
+      }
+    }
+  });
+
+  // Save the updated data
+  saveStoreBuilderData();
+}
+
+// Close modal when clicking overlay
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('edit-modal-overlay');
+  if (modal && e.target === modal) {
+    closeEditModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeEditModal();
+  }
 });
 </script>
 <script src="footer.js" defer></script>
