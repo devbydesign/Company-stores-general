@@ -327,6 +327,19 @@
       min-height: 100vh;
     }
 
+    /* Ensure body doesn't interfere with fixed positioning */
+    body {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Sticky canvas container for desktop */
+    .store-canvas-column {
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
     .store-header {
       text-align: center;
       margin-bottom: 3rem;
@@ -391,7 +404,7 @@
     }
 
     .category-header {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(135deg, var(--primary-color), var(--offset-color));
       color: white;
       padding: 1.5rem 2rem;
       cursor: pointer;
@@ -399,15 +412,16 @@
     }
 
     .category-header:hover {
-      background: linear-gradient(135deg, #1a2f4a, var(--secondary-color));
+      background: linear-gradient(135deg, var(--offset-color2), var(--offset-color2));
     }
 
     .category-header h3 {
+      color: white;
       margin: 0;
       font-size: 1.4rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
     }
 
     .category-header i {
@@ -416,7 +430,8 @@
     }
 
     .category-toggle {
-      font-size: 1.2rem;
+      font-size: 1.8rem;
+      margin-left: auto;
       transition: transform 0.3s ease;
     }
 
@@ -467,7 +482,7 @@
       border-radius: 6px;
       margin-bottom: 1rem;
     }
-
+    
     .product-tile h4 {
       margin: 0;
       font-size: 1.1rem;
@@ -520,7 +535,7 @@
       border-radius: 12px;
       border: 1px solid rgba(58, 12, 163, 0.1);
     }
-
+    
     .custom-suggestions h3 {
       color: var(--primary-color);
       margin-bottom: 1.5rem;
@@ -543,14 +558,14 @@
     .custom-form-group {
       margin-bottom: 1rem;
     }
-
+    
     .custom-form-group label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
       color: var(--primary-color);
     }
-
+    
     .custom-form-group textarea {
       width: 100%;
       padding: 1rem;
@@ -562,13 +577,13 @@
       min-height: 100px;
       font-family: inherit;
     }
-
+    
     .custom-form-group textarea:focus {
       outline: none;
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
     }
-
+    
     /* Add to Plan Button */
     .btn-secondary {
       background-color: var(--secondary-color);
@@ -576,7 +591,7 @@
       border: 2px solid var(--secondary-color);
       transition: all 0.3s ease;
     }
-
+    
     .btn-secondary:hover:not(:disabled) {
       background-color: #0056b3;
       border-color: #0056b3;
@@ -623,7 +638,7 @@
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      background: #dc3545;
+      background: color-mix(in srgb, var(--primary-color), black 30%);
       color: white;
       border: none;
       border-radius: 50%;
@@ -638,7 +653,7 @@
     }
 
     .custom-idea-remove:hover {
-      background: #c82333;
+      background: color-mix(in srgb, var(--primary-color), transparent 30%);
       transform: scale(1.1);
     }
 
@@ -727,7 +742,7 @@
     .company-store-canvas h3 {
       color: var(--primary-color);
       margin-bottom: 0.5rem;
-      font-size: 1.4rem;
+      font-size: 1.65rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -837,7 +852,7 @@
     }
 
     .canvas-store-item-remove {
-      background: #dc3545;
+      background: color-mix(in srgb, var(--primary-color), black 30%);
       color: white;
       border: none;
       border-radius: 50%;
@@ -853,19 +868,150 @@
     }
 
     .canvas-store-item-remove:hover {
-      background: #c82333;
+      background: color-mix(in srgb, var(--primary-color), transparent 30%);
       transform: scale(1.1);
+    }
+
+    /* Button Container for Custom Items */
+    .canvas-store-item-buttons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    /* Edit Button for Custom Items */
+    .canvas-store-item-edit {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+      margin-right: 5px;
+    }
+
+    .canvas-store-item-edit:hover {
+      background: color-mix(in srgb, var(--primary-color), black 20%);
+      transform: scale(1.1);
+    }
+
+    /* Edit Modal Styles */
+    .edit-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .edit-modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .edit-modal {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .edit-modal-overlay.show .edit-modal {
+      transform: scale(1);
+    }
+
+    .edit-modal h3 {
+      margin: 0 0 1.5rem 0;
+      color: var(--primary-color);
+      font-size: 1.4rem;
+    }
+
+    .edit-modal textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    .edit-modal textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.1);
+    }
+
+    .edit-modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .edit-modal-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .edit-modal-btn.save {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .edit-modal-btn.save:hover {
+      background: color-mix(in srgb, var(--primary-color), black 20%);
+      transform: translateY(-1px);
+    }
+
+    .edit-modal-btn.cancel {
+      background: #6c757d;
+      color: white;
+    }
+
+    .edit-modal-btn.cancel:hover {
+      background: #5a6268;
+      transform: translateY(-1px);
     }
 
     /* Custom Idea Items in Store Canvas */
     .custom-idea-item {
-      border: 2px solid #ff6b35 !important; /* Orange border for custom ideas */
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05)) !important;
+      border: 2px solid var(--primary-color) !important; /* Normal brand color border */
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--primary-color), transparent 90%),
+        color-mix(in srgb, var(--primary-color), transparent 95%)
+      ) !important;
     }
 
     .custom-idea-item .canvas-store-item-category {
-      color: #ff6b35;
-      font-weight: 600;
+      color: var(--primary-color);
+      font-weight: 700; /* Bold for "Custom Product Idea" text */
     }
 
     .store-actions .btn {
@@ -899,35 +1045,95 @@
     @media (max-width: 1024px) {
       .store-builder-container {
         flex-direction: column;
-        gap: 2rem;
-      }
-
-      .store-canvas-column {
-        position: static;
-        flex: none;
-        order: -1;
-        width: 100%;
-        max-width: none;
-      }
-
-      .company-store-canvas {
-        margin-bottom: 2rem;
-        width: 100%;
-        max-width: none;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .product-store-section {
-        padding: 2rem 1rem;
+        gap: 1.5rem;
       }
 
       .store-header h2 {
         font-size: 2rem;
+        text-align: center;
+        margin-bottom: 320px; /* Space for even taller fixed store panel */
+      }
+
+      .product-categories-column {
+        text-align: center; /* Center categories on tablet */
+        margin-bottom: 100px; /* Space for even taller fixed store panel */
+      }
+
+      .store-canvas-column {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        height: 490px; /* Further increased for better button accommodation */
+        background: white;
+        border-top: 3px solid var(--primary-color);
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+        border-radius: 16px 16px 0 0;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .company-store-canvas {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .store-canvas {
+        flex: 1; /* Take up available space */
+        min-height: 200px;
+        max-height: 200px;
+        padding: 0.75rem;
+        border: none;
+        overflow-y: auto;
+      }
+
+      .store-actions {
+        flex-shrink: 0; /* Don't shrink the buttons area */
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(58, 12, 163, 0.15);
+      }
+
+      .canvas-placeholder {
+        padding: 1.5rem 1rem;
+      }
+
+      .canvas-placeholder p {
+      font-size: 0.85rem;
+      }
+
+      .store-actions {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .store-header h2 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 320px; /* Space for even taller fixed store panel */
+      }
+
+      .store-description {
+        text-align: center;
+        margin-bottom: 2rem;
       }
 
       .store-builder-container {
-        gap: 1.5rem;
+        gap: 1rem;
+      }
+
+      .product-categories-column {
+        text-align: center;
+        margin-bottom: 20px; /* Space for even taller fixed store panel */
       }
 
       .product-categories-column,
@@ -937,10 +1143,79 @@
 
       .category-header {
         padding: 1rem 1.5rem;
+        margin: 0 auto 1rem auto;
+        max-width: 400px; /* Center categories with max width */
       }
 
       .category-header h3 {
         font-size: 1.2rem;
+        justify-content: center; /* Center title and icon */
+      }
+
+      .category-toggle {
+        position: absolute;
+        right: 1rem;
+      }
+
+      /* Mobile store canvas adjustments */
+      .store-canvas-column {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        height: 500px; /* Further increased for better accommodation */
+        background: white;
+        border-top: 3px solid var(--primary-color);
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+        border-radius: 16px 16px 0 0;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .company-store-canvas {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .store-canvas {
+        flex: 1;
+        min-height: 180px;
+        max-height: 180px;
+        padding: 0.75rem;
+        border: none;
+        overflow-y: auto;
+      }
+
+      .store-actions {
+        flex-shrink: 0;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(58, 12, 163, 0.15);
+      }
+
+      .canvas-store-item {
+        margin: 0.25rem 0;
+        padding: 0.5rem 0.4rem;
+      }
+
+      .canvas-store-item h4 {
+        font-size: 0.8rem;
+      }
+
+      .canvas-store-item-category {
+        font-size: 0.65rem;
+      }
+
+      .store-actions .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
       }
 
       .product-grid {
@@ -1013,6 +1288,29 @@
     }
 
     @media (max-width: 480px) {
+      .store-header h2 {
+        font-size: 1.8rem;
+        margin-bottom: 220px; /* Space for even taller fixed store panel */
+      }
+
+      .store-description {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .store-builder-container {
+        gap: 0.75rem;
+      }
+
+      .product-categories-column {
+        margin-bottom: 20px; /* Space for even taller fixed store panel */
+      }
+
+      .product-categories-column,
+      .store-canvas-column {
+        width: 100%;
+      }
+
       .product-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
@@ -1020,24 +1318,90 @@
       }
 
       .product-tile {
-        padding: 0.75rem;
+        padding: 0.6rem;
       }
 
       .product-tile img {
-        height: 80px;
+        height: 70px;
       }
 
       .product-tile h4 {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
 
-      .store-builder-container {
-        gap: 1rem;
+      .category-header {
+        padding: 0.8rem 1.2rem;
+        max-width: 350px;
       }
 
-      .product-categories-column,
+      .category-header h3 {
+        font-size: 1.1rem;
+      }
+
+      .category-toggle {
+        font-size: 1.4rem;
+        right: 0.8rem;
+      }
+
+      /* Phone-specific store adjustments */
       .store-canvas-column {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        height: 480px; /* Further increased for optimal accommodation */
+        background: white;
+        border-top: 3px solid var(--primary-color);
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+        border-radius: 16px 16px 0 0;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .company-store-canvas {
+        margin: 0;
         width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .store-canvas {
+        flex: 1;
+        min-height: 160px;
+        max-height: 160px;
+        padding: 0.5rem;
+        border: none;
+        overflow-y: auto;
+      }
+
+      .store-actions {
+        flex-shrink: 0;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(58, 12, 163, 0.15);
+      }
+
+      .canvas-placeholder {
+        padding: 1rem 0.5rem;
+      }
+
+      .canvas-placeholder p {
+        font-size: 0.8rem;
+      }
+
+      .canvas-placeholder i {
+        font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      }
+
+      .store-actions .btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
       }
     }
 
@@ -1046,27 +1410,36 @@
       .canvas-store-item {
         flex-direction: column;
         text-align: center;
-        padding: 0.75rem;
-        margin: 0.5rem;
+        padding: 0.5rem 0.4rem;
+        margin: 0.25rem 0;
       }
 
       .canvas-store-item img {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 0.5rem;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 0.25rem;
       }
 
       .canvas-store-item-content {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .canvas-store-item h4 {
+        font-size: 0.75rem;
+        line-height: 1.1;
+      }
+
+      .canvas-store-item-category {
+        font-size: 0.6rem;
       }
 
       .canvas-store-item-remove {
         position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 25px;
-        height: 25px;
-        font-size: 0.7rem;
+        top: 3px;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
       }
     }
 
@@ -1083,7 +1456,7 @@
     <!-- MOVED: Hero Section -->
     <section class="hero">
       <div class="container">
-        <h1>Build your Employee Recognition Program</h1>
+        <h1></h1>
         <!-- Removed p and button -->
       </div>
     </section>
@@ -1092,14 +1465,14 @@
     <section class="product-store-section">
       <div class="store-header">
         <h2>Build Your Company Store</h2>
-        <p class="store-description">Explore our curated collection of recognition products. These are just some ideas to start your plan!</p>
+        <p class="store-description">Explore our curated collection of store products. Select what you are interested in, and we'll help you expand it out from there!</p>
       </div>
 
-      <form id="plan-details-form" class="plan-details-form-1">
-        <input name="affiliateName" type="hidden" value="Rick Badiner">
-        <input name="affiliateEmail" type="hidden" value="Rbadiner@rbbmarketing.com">
-        <input name="headerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-header.png">
-        <input name="footerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-footer.png">
+        <form id="plan-details-form" class="plan-details-form-1"> 
+          <input name="affiliateName" type="hidden" value="Rick Badiner">
+          <input name="affiliateEmail" type="hidden" value="Rbadiner@rbbmarketing.com">
+          <input name="headerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-header.png">
+          <input name="footerImgPath" type="hidden" value="https://htmlgen.webdevbydesign.com/img/rbb-footer.png">
 
         <div class="store-builder-container">
           <!-- Left Column: Product Categories -->
@@ -1109,112 +1482,112 @@
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('apparel')">
               <h3><i class="fas fa-tshirt"></i> Apparel <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="apparel-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Zip Jacket" data-category="Apparel" data-image="assets/images/Apparel.png">
                   <img src="assets/images/Apparel.png" alt="Zip Jacket">
                   <h4>Zip Jacket</h4>
                   <input type="checkbox" name="planList" value="Zip Jacket" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="T-Shirt" data-category="Apparel" data-image="assets/images/Apparel2.png">
                   <img src="assets/images/Apparel2.png" alt="T-Shirt">
                   <h4>T-Shirt</h4>
                   <input type="checkbox" name="planList" value="T-Shirt" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Pullover" data-category="Apparel" data-image="assets/images/ApparelSweater.png">
                   <img src="assets/images/ApparelSweater.png" alt="Pullover">
                   <h4>Pullover</h4>
                   <input type="checkbox" name="planList" value="Pullover" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Triblend T-Shirt" data-category="Apparel" data-image="assets/images/triblend-tshirts.jpg">
                   <img src="assets/images/triblend-tshirts.jpg" alt="Triblend T-Shirt">
                   <h4>Triblend T-Shirt</h4>
                   <input type="checkbox" name="planList" value="Triblend T-Shirt" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Bags & Totes Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('bags')">
               <h3><i class="fas fa-shopping-bag"></i> Bags & Totes <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="bags-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Laptop Bag" data-category="Bags & Totes" data-image="assets/images/backpack1.jpg">
                   <img src="assets/images/backpack1.jpg" alt="Laptop Bag">
                   <h4>Laptop Bag</h4>
                   <input type="checkbox" name="planList" value="Laptop Bag" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Backpack" data-category="Bags & Totes" data-image="assets/images/SlingBackpacks.png">
                   <img src="assets/images/SlingBackpacks.png" alt="Backpack">
                   <h4>Backpack</h4>
                   <input type="checkbox" name="planList" value="Backpack" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Tote" data-category="Bags & Totes" data-image="assets/images/tote1.jpg">
                   <img src="assets/images/tote1.jpg" alt="Tote">
                   <h4>Tote</h4>
                   <input type="checkbox" name="planList" value="Tote" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Travel Bag" data-category="Bags & Totes" data-image="assets/images/travelbag1.jpg">
                   <img src="assets/images/travelbag1.jpg" alt="Travel Bag">
                   <h4>Travel Bag</h4>
                   <input type="checkbox" name="planList" value="Travel Bag" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Drinkware Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('drinkware')">
               <h3><i class="fas fa-coffee"></i> Drinkware <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="drinkware-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Water Bottle" data-category="Drinkware" data-image="assets/images/waterbottle1.png">
                   <img src="assets/images/waterbottle1.png" alt="Water Bottle">
                   <h4>Water Bottle</h4>
                   <input type="checkbox" name="planList" value="Water Bottle" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Tumbler" data-category="Drinkware" data-image="assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg">
                   <img src="assets/images/Arctic-Zone-Titan-24-oz.-Copper-Mug-1024x1024.jpg" alt="Tumbler">
                   <h4>Tumbler</h4>
                   <input type="checkbox" name="planList" value="Tumbler" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Mug" data-category="Drinkware" data-image="assets/images/Ceramic Mugs.jpg">
                   <img src="assets/images/Ceramic Mugs.jpg" alt="Mug">
                   <h4>Mug</h4>
                   <input type="checkbox" name="planList" value="Mug" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Insulated Tall Mug" data-category="Drinkware" data-image="assets/images/copper-mug.jpg">
                   <img src="assets/images/copper-mug.jpg" alt="Insulated Tall Mug">
                   <h4>Insulated Tall Mug</h4>
                   <input type="checkbox" name="planList" value="Insulated Tall Mug" class="hidden">
-                </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           <!-- Office Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('office')">
               <h3><i class="fas fa-briefcase"></i> Office <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+              </div>
             <div id="office-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Note Cards" data-category="Office" data-image="assets/images/ThankyouNotes.png">
                   <img src="assets/images/ThankyouNotes.png" alt="Note Cards">
                   <h4>Note Cards</h4>
                   <input type="checkbox" name="planList" value="Note Cards" class="hidden">
-                </div>
+            </div>
                 <div class="product-tile" draggable="true" data-product="Pens" data-category="Office" data-image="assets/images/Pens.png">
                   <img src="assets/images/Pens.png" alt="Pens">
                   <h4>Pens</h4>
                   <input type="checkbox" name="planList" value="Pens" class="hidden">
-                </div>
+              </div>
                 <div class="product-tile" draggable="true" data-product="Sticky Notes" data-category="Office" data-image="assets/images/StickyNotes.png">
                   <img src="assets/images/StickyNotes.png" alt="Sticky Notes">
                   <h4>Sticky Notes</h4>
@@ -1225,15 +1598,15 @@
                   <h4>Notebooks</h4>
                   <input type="checkbox" name="planList" value="Notebooks" class="hidden">
                 </div>
-              </div>
             </div>
           </div>
+        </div>
 
           <!-- Outdoor Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('outdoor')">
               <h3><i class="fas fa-campground"></i> Outdoor <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+          </div>
             <div id="outdoor-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Drink Cooler" data-category="Outdoor" data-image="assets/images/LunchCooler.png">
@@ -1257,14 +1630,14 @@
                   <input type="checkbox" name="planList" value="Adventure Sling" class="hidden">
                 </div>
               </div>
-            </div>
-          </div>
+        </div>
+      </div>
 
           <!-- Tech Items Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('tech')">
               <h3><i class="fas fa-mobile-alt"></i> Tech Items <i class="fas fa-chevron-down category-toggle"></i></h3>
-            </div>
+        </div>
             <div id="tech-content" class="category-content">
               <div class="product-grid">
                 <div class="product-tile" draggable="true" data-product="Charger" data-category="Tech Items" data-image="assets/images/TechItems.png">
@@ -1289,7 +1662,7 @@
                 </div>
               </div>
             </div>
-          </div>
+      </div>
 
           <!-- Simple Amenities Category -->
           <div class="product-category">
@@ -1320,8 +1693,8 @@
                 </div>
               </div>
             </div>
-          </div>
-
+      </div>
+      
           <!-- Awards Category -->
           <div class="product-category">
             <div class="category-header" onclick="toggleCategory('awards')">
@@ -1386,7 +1759,7 @@
             
             <!-- Action Buttons -->
             <div class="store-actions">
-              <button id="save-program-btn" class="btn" onclick="saveCompanyStorePlan()">Save My Company Store Plan</button>
+              <button id="save-program-btn" class="btn" onclick="saveCompanyStorePlan()">Save My Company Store</button>
               <button id="start-over-btn" class="btn btn-outline" onclick="clearStore()">Start Over</button>
             </div>
           </div>
@@ -1429,14 +1802,7 @@
               </div>
           </div>
           
-          <!-- Selected Features Display -->
-          <div id="form-selected-features" class="form-selected-features">
-            <h3>Your Customized Selection</h3>
-            <div id="form-features-list" class="form-features-list">
-              <!-- Features will be populated by JavaScript -->
-            </div>
-
-          </div>
+          
           
           <!-- Consultation Note -->
           <div class="consultation-note">
@@ -1464,8 +1830,7 @@
                      <h3>What's Next:</h3>
                      <ul>
                          <li>We've emailed your summary</li>
-                         <li>Expect tips over the next week</li>
-                         <li>We'll reach out shortly to talk about your personalized plan!</li>
+                         <li>We'll reach out shortly to talk about setting up your company store!</li>
                      </ul>
                 </div>
                 
@@ -1649,7 +2014,7 @@ function addProductToStore(productData) {
     <div class="canvas-store-item-content">
       <h4>${productData.product}</h4>
       <p class="canvas-store-item-category">${productData.category}</p>
-    </div>
+      </div>
     <button class="canvas-store-item-remove" onclick="removeProductFromStore('${productData.product}')">
       <i class="fas fa-times"></i>
     </button>
@@ -1964,10 +2329,15 @@ function addCustomIdeaToStore(productData) {
     <div class="canvas-store-item-content">
       <h4>${productData.product}</h4>
       <p class="canvas-store-item-category">${productData.category}</p>
+        </div>
+    <div class="canvas-store-item-buttons">
+      <button class="canvas-store-item-edit" onclick="editCustomIdea('${productData.product}')" title="Edit custom idea">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button class="canvas-store-item-remove" onclick="removeCustomIdeaFromStore('${productData.product}')">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-    <button class="canvas-store-item-remove" onclick="removeCustomIdeaFromStore('${productData.product}')">
-      <i class="fas fa-times"></i>
-    </button>
   `;
 
   // Add to canvas
@@ -2034,7 +2404,7 @@ function updateCustomIdeasList() {
       <button class="custom-idea-remove" onclick="removeCustomIdea(${index})" title="Remove this idea">
         <i class="fas fa-times"></i>
       </button>
-    </div>
+          </div>
   `).join('');
 }
 
@@ -2413,14 +2783,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Create captcha selector
   setTimeout(createCaptchaSelector, 100);
 
+  // Expand the first category (Apparel) by default
+  setTimeout(function() {
+    toggleCategory('apparel');
+  }, 200);
+
   // Also initialize after any category expansion
   window.reinitializeCompanyStoreDragAndDrop = function() {
     initializeDragAndDrop();
   };
 
-  const form = document.getElementById("plan-details-form");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+      const form = document.getElementById("plan-details-form");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
 
     // Validate captcha first
     if (!validateCaptcha()) {
@@ -2441,30 +2816,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Combine all product information
     const allProducts = formattedPlans + customIdeasFormatted;
-    affiliateName = document.getElementsByName('affiliateName')[0]?.value || '';
-    affiliateEmail = document.getElementsByName('affiliateEmail')[0]?.value || '';
-    headerImgPath = document.getElementsByName('headerImgPath')[0]?.value || '';
-    footerImgPath = document.getElementsByName('footerImgPath')[0]?.value || '';
-    firstName = document.getElementsByName('firstName')[0]?.value || '';
-    lastName = document.getElementsByName('lastName')[0]?.value || '';
-    phone = document.getElementsByName('phone')[0]?.value || '';
-    email = document.getElementsByName('email')[0]?.value || '';
-    companyName = document.getElementsByName('companyName')[0]?.value || '';
+        affiliateName = document.getElementsByName('affiliateName')[0]?.value || '';
+        affiliateEmail = document.getElementsByName('affiliateEmail')[0]?.value || '';
+        headerImgPath = document.getElementsByName('headerImgPath')[0]?.value || '';
+        footerImgPath = document.getElementsByName('footerImgPath')[0]?.value || '';
+        firstName = document.getElementsByName('firstName')[0]?.value || '';
+        lastName = document.getElementsByName('lastName')[0]?.value || '';
+        phone = document.getElementsByName('phone')[0]?.value || '';
+        email = document.getElementsByName('email')[0]?.value || '';
+        companyName = document.getElementsByName('companyName')[0]?.value || '';
 
     emailjs.send("service_ag1505e", "template_8uub27t", {
       planList: allProducts,
-      affiliateName: affiliateName,
-      affiliateEmail: affiliateEmail,
-      headerImgPath: headerImgPath,
-      footerImgPath: footerImgPath,
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone,
-      email: email,
-      companyName: companyName,
-    })
-      .then(() => {
-        alert("Your submission was successful!");
+          affiliateName: affiliateName,
+          affiliateEmail: affiliateEmail,
+          headerImgPath: headerImgPath,
+          footerImgPath: footerImgPath,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          companyName: companyName,
+        })
+          .then(() => {
+            alert("Your submission was successful!");
 
         // Populate and reveal the plan summary
         populatePlanSummary({
@@ -2481,14 +2856,133 @@ document.addEventListener("DOMContentLoaded", function () {
         revealPlanSummary();
 
         // Reset the form
-        form.reset();
+            form.reset();
 
         // Generate new captcha after successful submission
         setTimeout(() => generateCaptcha(), 1000);
-      }, (error) => {
-        alert("Your submission failed to save: " + JSON.stringify(error));
+          }, (error) => {
+            alert("Your submission failed to save: " + JSON.stringify(error));
+          });
       });
+});
+
+// Custom Idea Edit Functionality
+let currentEditingItem = null;
+
+function editCustomIdea(itemText) {
+  currentEditingItem = itemText;
+
+  // Create modal if it doesn't exist
+  let modal = document.getElementById('edit-modal-overlay');
+  if (!modal) {
+    const modalHTML = `
+      <div id="edit-modal-overlay" class="edit-modal-overlay">
+        <div class="edit-modal">
+          <h3>Edit Custom Product Idea</h3>
+          <textarea id="edit-item-text" placeholder="Enter your custom product idea...">${itemText}</textarea>
+          <div class="edit-modal-buttons">
+            <button class="edit-modal-btn cancel" onclick="closeEditModal()">Cancel</button>
+            <button class="edit-modal-btn save" onclick="saveEditedItem()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    modal = document.getElementById('edit-modal-overlay');
+  } else {
+    // Update textarea with current text
+    document.getElementById('edit-item-text').value = itemText;
+  }
+
+  // Show modal
+  modal.classList.add('show');
+
+  // Focus on textarea
+  setTimeout(() => {
+    document.getElementById('edit-item-text').focus();
+  }, 100);
+}
+
+function closeEditModal() {
+  const modal = document.getElementById('edit-modal-overlay');
+  if (modal) {
+    modal.classList.remove('show');
+  }
+  currentEditingItem = null;
+}
+
+function saveEditedItem() {
+  const newText = document.getElementById('edit-item-text').value.trim();
+
+  if (!newText) {
+    alert('Please enter some text for your custom product idea.');
+    return;
+  }
+
+  if (!currentEditingItem) {
+    closeEditModal();
+    return;
+  }
+
+  // Update the item in the custom ideas array
+  const index = customIdeas.findIndex(idea => idea === currentEditingItem);
+  if (index !== -1) {
+    customIdeas[index] = newText;
+    updateCustomIdeasList();
+  }
+
+  // Update the item in the store canvas
+  updateStoreItemText(currentEditingItem, newText);
+
+  // Close modal
+  closeEditModal();
+}
+
+function updateStoreItemText(oldText, newText) {
+  // Find the store item with the old text
+  const storeItems = document.querySelectorAll('.canvas-store-item[data-category="custom-idea"]');
+  storeItems.forEach(item => {
+    if (item.dataset.product === oldText) {
+      // Update the data attribute
+      item.setAttribute('data-product', newText);
+
+      // Update the text content
+      const titleElement = item.querySelector('h4');
+      if (titleElement) {
+        titleElement.textContent = newText;
+      }
+
+      // Update the remove button onclick
+      const removeBtn = item.querySelector('.canvas-store-item-remove');
+      if (removeBtn) {
+        removeBtn.setAttribute('onclick', `removeCustomIdeaFromStore('${newText}')`);
+      }
+
+      // Update the edit button onclick
+      const editBtn = item.querySelector('.canvas-store-item-edit');
+      if (editBtn) {
+        editBtn.setAttribute('onclick', `editCustomIdea('${newText}')`);
+      }
+    }
   });
+
+  // Save the updated data
+  saveStoreBuilderData();
+}
+
+// Close modal when clicking overlay
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('edit-modal-overlay');
+  if (modal && e.target === modal) {
+    closeEditModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeEditModal();
+  }
 });
 </script>
 <script src="footer.js" defer></script>

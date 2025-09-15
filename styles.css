@@ -9,7 +9,8 @@
   --medium-color: #f0f2f5; /* Light grey for backgrounds/borders */
   --text-muted: #666666; /* Muted text color */
   --success-color: #23456C; /* RBB Marketing Blue for checkmarks etc. */
-  --offset-color: color-mix(in srgb, var(--primary-color), black 0%);
+  --offset-color: color-mix(in srgb, var(--primary-color), white 6%);
+  --offset-color2: color-mix(in srgb, var(--primary-color), black 40%);
   --border-radius: 6px;
   --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-secondary: 'Georgia', serif; /* For select headings or accents */
