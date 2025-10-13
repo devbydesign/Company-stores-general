@@ -9,7 +9,7 @@ const navigationHTML = `
       <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <ul id="nav-list">
         <li><a href="index.html">Company Stores</a></li>
-        <li><a href="build-program.html">Build Your Program</a></li>
+        <li><a href="build-program.html">Build Your Company store</a></li>
         // <li class="dropdown">
         //   <a href="resources.html">Program Resources <i class="fas fa-chevron-down"></i></a>
         //   <ul class="dropdown-menu three-column">
