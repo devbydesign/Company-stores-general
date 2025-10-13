@@ -9,34 +9,34 @@ const navigationHTML = `
       <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <ul id="nav-list">
         <li><a href="index.html">Company Stores</a></li>
-        <li><a href="build-program.html">Build Your Program</a></li>
-        <li class="dropdown">
-          <a href="resources.html">Program Resources <i class="fas fa-chevron-down"></i></a>
-          <ul class="dropdown-menu three-column">
-            <div class="dropdown-column overview-column">
-              <li><a href="resources.html">Overview</a></li>
-              <li><a href="vital-statistics.html">Vital Statistics</a></li>
-            </div>
-            <div class="dropdown-column features-column">
-              <li><a href="attendance-recognition.html">Attendance Recognition</a></li>
-              <li><a href="community-impact.html">Community Impact</a></li>
-              <li><a href="general-awards.html">General Awards</a></li>
-              <li><a href="incentive-programs.html">Incentive Programs</a></li>
+        <li><a href="build-program.html">Build Your Company store</a></li>
+        // <li class="dropdown">
+        //   <a href="resources.html">Program Resources <i class="fas fa-chevron-down"></i></a>
+        //   <ul class="dropdown-menu three-column">
+        //     <div class="dropdown-column overview-column">
+        //       <li><a href="resources.html">Overview</a></li>
+        //       <li><a href="vital-statistics.html">Vital Statistics</a></li>
+        //     </div>
+        //     <div class="dropdown-column features-column">
+        //       <li><a href="attendance-recognition.html">Attendance Recognition</a></li>
+        //       <li><a href="community-impact.html">Community Impact</a></li>
+        //       <li><a href="general-awards.html">General Awards</a></li>
+        //       <li><a href="incentive-programs.html">Incentive Programs</a></li>
 
-              <li><a href="peer-to-peer.html">Peer-to-Peer</a></li>
-              <li><a href="performance-bonuses.html">Performance Bonuses</a></li>
-            </div>
-            <div class="dropdown-column features-column">
-              <li><a href="point-based-rewards.html">Point-Based Rewards</a></li>
-              <li><a href="safety-recognition.html">Safety Recognition</a></li>
-              <li><a href="spot-recognition.html">Spot Recognition</a></li>
-              <li><a href="volunteer-recognition.html">Volunteer Recognition</a></li>
-              <li><a href="welcome-kits.html">Welcome Kits</a></li>
-              <li><a href="wellness-programs.html">Wellness Programs</a></li>
-              <li><a href="years-of-service.html">Years of Service</a></li>
-            </div>
-          </ul>
-        </li>
+        //       <li><a href="peer-to-peer.html">Peer-to-Peer</a></li>
+        //       <li><a href="performance-bonuses.html">Performance Bonuses</a></li>
+        //     </div>
+        //     <div class="dropdown-column features-column">
+        //       <li><a href="point-based-rewards.html">Point-Based Rewards</a></li>
+        //       <li><a href="safety-recognition.html">Safety Recognition</a></li>
+        //       <li><a href="spot-recognition.html">Spot Recognition</a></li>
+        //       <li><a href="volunteer-recognition.html">Volunteer Recognition</a></li>
+        //       <li><a href="welcome-kits.html">Welcome Kits</a></li>
+        //       <li><a href="wellness-programs.html">Wellness Programs</a></li>
+        //       <li><a href="years-of-service.html">Years of Service</a></li>
+        //     </div>
+        //   </ul>
+        // </li>
           <li><a href="contact.html">Contact Us</a></li>
       </ul>
       <form class="search-form" id="search-form-header">
