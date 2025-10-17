@@ -1,9 +1,9 @@
-Our generic B2B Recognition website.
+Our generic B2B Company Store website.
 
 
-Steps to set up a new recognition website:
+Steps to set up a new company store website:
 
-1. Fork from recognition-b2b or healthcare repo.
+1. Fork from this repo.
 2. Search and replace 'RBB Marketing' with the new company name.
 3. Searh and replace 'Rick Badiner' with the new affiliate name.
 4. Do the same with their main phone number and contact email address. (instead of rbadiner1@rbbmarketnig.com)
