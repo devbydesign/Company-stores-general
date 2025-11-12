@@ -1089,12 +1089,12 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
 /* New Landing Hero */
 .hero-landing {
   position: relative;
-  min-height: clamp(15vh, 15vw + 20vh, 60vh); /* Much more aggressive height scaling */
+  min-height: 55vh; /* Extended height for taller banner image */
   display: flex;
   align-items: flex-start; /* Stick to top instead of center */
   justify-content: center;
   text-align: center;
-  padding: 0 1rem; /* Remove top/bottom padding to stick to top */
+  padding: 0; /* Remove all padding */
   color: var(--light-color);
   overflow: hidden;
 }
@@ -1106,7 +1106,7 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
   width: 100%;
   height: 100%;
   /* Removed linear-gradient overlay */
-  background: url('assets/images/Banner-Basic.png') center top/cover no-repeat; /* Stick to top */
+  background: url('assets/images/BannerBasic.png') center top/cover no-repeat; /* Stick to top */
   background-size: clamp(100%, 2vw + 98%, 120%); /* Fluid background scaling */
   z-index: 1;
   filter: brightness(0.95); /* Slightly brighter */
@@ -1127,6 +1127,24 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
   position: relative;
   z-index: 2;
   max-width: 800px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: inherit;
+}
+
+.hero-text-overlay {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.overlay-background {
+  background-color: rgba(35,69,108,0.8);
+  border-radius: 20px;
+  padding: 2rem;
+  display: inline-block;
+  max-width: 600px;
 }
 
 .hero-landing h1 {
@@ -1137,10 +1155,11 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
 }
 
 .hero-landing h2 {
-  font-size: 2.025rem; /* Proportionally increased: 1.8 * 1.125 */
-  color: var(--light-color);
-  font-weight: 400;
-  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   opacity: 0.9;
 }
 
@@ -1178,7 +1197,7 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
 
 /* Why Matters Section */
 .why-matters {
-  padding: var(--section-padding);
+  padding: 0 0 4rem 0; /* Remove top padding, keep bottom padding */
   background-color: #f9fafb; /* Very light grey */
 }
 
@@ -1352,8 +1371,8 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
 /* Responsive adjustments for landing page */
 @media (max-width: 992px) and (min-width: 769px) {
   .hero-landing {
-    min-height: 30vh; /* Further reduced to eliminate empty space */
-    padding: 0 1rem 1rem 1rem; /* Reduce bottom padding too */
+    min-height: 40vh; /* Extended height for taller banner on tablet */
+    padding: 0; /* Remove padding */
     align-items: flex-start; /* Align to top instead of center */
   }
   .hero-landing-bg {
@@ -1361,15 +1380,14 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
     background-position: center top; /* Stick to top instead of center */
   }
   .hero-text-overlay {
-    margin-top: calc(30vh * 0.55) !important; /* Adjust for new container height */
-    width: 160% !important; /* Slightly reduce width */
-    left: -30% !important; /* Adjust positioning */
+    margin-top: 1rem;
   }
-  .hero-text-overlay h2 {
-    font-size: 3.2rem !important; /* Larger tablet size */
+  .overlay-background {
+    max-width: 500px;
+    padding: 1.5rem;
   }
-  .hero-text-overlay .overlay-background {
-    padding: 0.8rem !important; /* Scale down from 1rem */
+  .hero-landing h2 {
+    font-size: 2.5rem !important;
   }
   .hero-landing h1 { font-size: 3.375rem; } /* Proportionally increased: 3.0 * 1.125 */
   .hero-landing h2 { font-size: 1.6875rem; } /* Proportionally increased: 1.5 * 1.125 */
@@ -1409,45 +1427,42 @@ main.container > h1 + p { /* Selects paragraph immediately following h1 in main 
 
 @media (max-width: 768px) {
   .hero-landing {
-    min-height: 25vh; /* Further reduced to eliminate empty space */
-    padding: 0 1rem 0.5rem 1rem; /* Minimal bottom padding */
-    align-items: flex-start; /* Align to top instead of center */
+    min-height: 35vh; /* Extended height for taller banner on mobile */
+    padding: 0;
   }
   .hero-landing-bg {
-    background-size: 140%; /* Scale up more for smaller tablets to crop more sides */
-    background-position: center top; /* Stick to top instead of center */
+    background-size: 140%;
+    background-position: center top;
   }
   .hero-text-overlay {
-    margin-top: calc(25vh * 0.45) !important; /* Adjust for new container height */
-    width: 140% !important; /* Reduce width more */
-    left: -20% !important; /* Adjust positioning */
+    margin-top: 1rem;
   }
-  .hero-text-overlay h2 {
-    font-size: 2.4rem !important; /* Mobile tablet size */
+  .overlay-background {
+    max-width: 90%;
+    padding: 1.5rem;
   }
-  .hero-text-overlay .overlay-background {
-    padding: 0.5rem !important; /* Smaller padding for smaller screens */
+  .hero-landing h2 {
+    font-size: 2rem !important;
   }
 }
 
 @media (max-width: 650px) {
-  .hero-text-overlay {
-    margin-top: calc(22vh * 0.45) !important; /* Adjust for smaller container */
+  .overlay-background {
+    max-width: 95%;
+    padding: 1.2rem;
   }
-  .hero-text-overlay h2 {
-    font-size: 2rem !important; /* Large mobile size */
+  .hero-landing h2 {
+    font-size: 1.8rem !important;
   }
 }
 
 @media (max-width: 600px) {
-  .hero-text-overlay {
-    margin-top: calc(20vh * 0.45) !important; /* Adjust for smaller container */
+  .overlay-background {
+    max-width: 98%;
+    padding: 1rem;
   }
-  .hero-text-overlay h2 {
-    font-size: 1.8rem !important; /* Mobile size */
-  }
-  .hero-text-overlay .overlay-background {
-    padding: 0.4rem !important; /* Minimal padding */
+  .hero-landing h2 {
+    font-size: 1.6rem !important;
   }
 }
 
